@@ -50,14 +50,18 @@ export async function POST(req: NextRequest) {
     // Send notification email via Resend (optional — graceful degradation)
     const resendKey = process.env.RESEND_API_KEY
     const contactEmail = process.env.CONTACT_EMAIL ?? 'contact@2ac-gn.com'
+    // Tant que le domaine n'est pas vérifié dans Resend, onboarding@resend.dev
+    // est l'expéditeur autorisé par défaut.
+    const fromEmail = process.env.RESEND_FROM ?? 'onboarding@resend.dev'
 
     if (resendKey) {
       try {
         const { Resend } = await import('resend')
         const resend = new Resend(resendKey)
         await resend.emails.send({
-          from: 'no-reply@2ac-gn.com',
+          from: fromEmail,
           to: contactEmail,
+          replyTo: payload.email,
           subject: `[2AC SARL] Nouveau message — ${payload.subject ?? payload.type}`,
           text: [
             `Type : ${payload.type}`,
