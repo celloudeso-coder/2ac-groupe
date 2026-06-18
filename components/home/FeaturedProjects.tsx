@@ -30,7 +30,7 @@ export default async function FeaturedProjects() {
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, i) => (
             <ScrollReveal key={project.slug} delay={i * 100}>
               <article className="card-glass hover-glow group h-full overflow-hidden">

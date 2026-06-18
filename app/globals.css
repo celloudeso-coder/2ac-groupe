@@ -48,11 +48,17 @@
 
   html {
     scroll-behavior: smooth;
+    /* Empêche tout débordement horizontal parasite (éléments décoratifs,
+       grilles) de créer un scroll latéral sur mobile. `clip` (et non `hidden`)
+       ne crée pas de conteneur de défilement → ne casse pas le `sticky` du header. */
+    overflow-x: clip;
   }
 
   body {
     @apply bg-background text-ink antialiased;
     font-feature-settings: 'kern' 1, 'liga' 1;
+    /* Filet de sécurité supplémentaire pour les très vieux navigateurs sans `clip`. */
+    max-width: 100%;
   }
 
   *:focus-visible {

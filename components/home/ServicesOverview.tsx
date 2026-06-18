@@ -26,7 +26,7 @@ export default async function ServicesOverview() {
           description="De la construction neuve à la logistique internationale, nous couvrons l'ensemble de vos besoins avec la même rigueur et le même professionnalisme."
         />
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, i) => {
             const Icon = ICONS[service.icon ?? ''] ?? Building2
             return (

@@ -35,7 +35,7 @@ export default function CookieBanner() {
     >
       <div className="flex items-start gap-3">
         <Cookie className="mt-0.5 h-5 w-5 shrink-0 text-brand" aria-hidden />
-        <div className="flex-1">
+        <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold text-ink">Ce site utilise des cookies</p>
           <p className="mt-1 text-xs leading-relaxed text-muted">
             Nous utilisons des cookies essentiels et analytiques pour améliorer votre expérience.{' '}

@@ -28,7 +28,7 @@ export default async function Testimonials() {
           description="La satisfaction de nos clients est notre meilleure carte de visite."
         />
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((t, i) => (
             <ScrollReveal key={t.author_name} delay={i * 100}>
               <blockquote className="card-glass hover-glow flex h-full flex-col p-6">

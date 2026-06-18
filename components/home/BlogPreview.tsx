@@ -24,7 +24,7 @@ export default async function BlogPreview() {
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post, i) => (
             <ScrollReveal key={post.slug} delay={i * 100}>
               <article className="card-glass hover-glow group flex h-full flex-col overflow-hidden">
