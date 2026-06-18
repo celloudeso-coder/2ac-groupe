@@ -78,7 +78,7 @@ export default function AdminShell({
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between px-5 py-5">
         <Link href="/admin" className="flex items-center" aria-label="Administration 2AC GROUPE">
-          <Logo height={28} />
+          <Logo height={40} />
         </Link>
         <button
           type="button"
@@ -140,7 +140,7 @@ export default function AdminShell({
         >
           <Menu className="h-5 w-5" aria-hidden />
         </button>
-        <Logo height={26} />
+        <Logo height={34} />
         <span className="w-10" aria-hidden />
       </header>
 
