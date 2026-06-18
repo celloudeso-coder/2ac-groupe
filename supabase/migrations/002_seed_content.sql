@@ -84,7 +84,7 @@ on conflict (slug) do nothing;
 
 -- ----- TÉMOIGNAGES (idempotent : seedé uniquement si la table est vide) -----
 insert into public.testimonials (author_name, company, content, rating, sort_order, status)
-select * from (values
+select author_name, company, content, rating, sort_order, status::content_status from (values
   ('Mamadou Baldé','Directeur, Groupe Balkis Immobilier',
    '2AC SARL a construit notre siège social en respectant à la lettre le budget et le calendrier. Leur sérieux et la qualité de leurs finitions sont remarquables. Je les recommande sans hésitation pour tout projet de construction en Guinée.',
    5, 1, 'published'),
@@ -101,7 +101,7 @@ where not exists (select 1 from public.testimonials);
 -- Mot du dirigeant : seedé en 'draft' (invisible) tant que le NOM RÉEL et la
 -- PHOTO ne sont pas fournis par le client. À publier après mise à jour.
 insert into public.team_members (full_name, role, bio, is_ceo, sort_order, status)
-select * from (values
+select full_name, role, bio, is_ceo, sort_order, status::content_status from (values
   ('À renseigner — Directeur Général','Fondateur & Directeur Général',
    'Fort de plus de 10 ans d''expérience dans le BTP, le commerce international et la logistique, le fondateur a bâti 2AC SARL sur des valeurs d''excellence, de fiabilité et d''innovation au service du développement guinéen.',
    true, 1, 'draft')

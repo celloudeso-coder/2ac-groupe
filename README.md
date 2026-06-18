@@ -259,6 +259,12 @@ Vercel détecte automatiquement Next.js. Les déploiements suivants se font à c
 - Configurez le domaine `2ac-gn.com` dans **Settings → Domains**.
 - Vérifiez que `NEXT_PUBLIC_SITE_URL` pointe vers le domaine final (pour le sitemap et les balises Open Graph).
 
+### Redirections 301 des anciennes URLs
+
+Pour préserver le référencement, les anciennes URLs du site LWS sont redirigées dans la constante `LEGACY_REDIRECTS` de [`next.config.ts`](next.config.ts).
+
+> ⚠️ Les correspondances actuelles sont des **hypothèses** (`/domaines/...`, `/blog-detail/ID`). **Avant la mise en ligne**, remplacez-les par les vraies anciennes URLs (relevées dans l'ancien `sitemap.xml` ou la Google Search Console) et ajoutez les redirections d'articles 1:1 `ID → slug`. Un 301 erroné est définitif et mis en cache par Google.
+
 ---
 
 ## Conformité & qualité
