@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { MapPin, ArrowRight, Building2 } from 'lucide-react'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollReveal from '@/components/ui/ScrollReveal'
-import { FEATURED_PROJECTS } from '@/lib/data'
+import { getFeaturedProjects } from '@/lib/content'
 
 const PROJECT_GRADIENTS = [
   'from-primary-800 to-primary-600',
@@ -10,7 +10,8 @@ const PROJECT_GRADIENTS = [
   'from-primary-700 to-accent-700',
 ]
 
-export default function FeaturedProjects() {
+export default async function FeaturedProjects() {
+  const projects = await getFeaturedProjects()
   return (
     <section className="section-padding bg-surface" aria-labelledby="projects-heading">
       <div className="container-base">
@@ -29,7 +30,7 @@ export default function FeaturedProjects() {
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {FEATURED_PROJECTS.map((project, i) => (
+          {projects.map((project, i) => (
             <ScrollReveal key={project.slug} delay={i * 100}>
               <article className="card-base group overflow-hidden">
                 {/* Image placeholder */}

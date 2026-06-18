@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Calendar, User, ArrowRight } from 'lucide-react'
-import { BLOG_POSTS_DATA } from '@/lib/data'
+import { getBlogPosts } from '@/lib/content'
 import { formatDate } from '@/lib/utils'
 import CtaBanner from '@/components/home/CtaBanner'
 
@@ -19,7 +19,10 @@ const CATEGORY_COLORS: Record<string, string> = {
   Conseil: 'bg-rose-100 text-rose-700',
 }
 
-export default function BlogPage() {
+export const revalidate = 60
+
+export default async function BlogPage() {
+  const posts = await getBlogPosts()
   return (
     <>
       {/* Hero */}
@@ -36,7 +39,7 @@ export default function BlogPage() {
       <section className="section-padding bg-surface" aria-label="Articles de blog">
         <div className="container-base">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {BLOG_POSTS_DATA.map((post) => (
+            {posts.map((post) => (
               <article key={post.slug} className="card-base group flex flex-col overflow-hidden">
                 <div className="h-2 gradient-primary" aria-hidden />
                 <div className="flex flex-1 flex-col p-6">

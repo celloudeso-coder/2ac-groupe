@@ -131,7 +131,7 @@ export default function Footer() {
           <p className="text-xs text-slate-600">
             Développé par{' '}
             <a href="#" className="text-slate-500 transition-colors hover:text-slate-300">
-              Groupe Wolikhai
+              LynxaTech (LYNXA SARL)
             </a>
           </p>
         </div>

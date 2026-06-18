@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ServiceCard from '@/components/services/ServiceCard'
 import CtaBanner from '@/components/home/CtaBanner'
-import { SERVICES_DATA } from '@/lib/data'
+import { getServices } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'Nos Services',
@@ -10,7 +10,10 @@ export const metadata: Metadata = {
     'Découvrez les 5 domaines d\'activité de 2AC SARL : BTP, commerce de matériaux, logistique internationale, import-export et conseil stratégique à Conakry.',
 }
 
-export default function ServicesPage() {
+export const revalidate = 60
+
+export default async function ServicesPage() {
+  const services = await getServices()
   return (
     <>
       {/* Hero */}
@@ -30,7 +33,7 @@ export default function ServicesPage() {
       <section className="section-padding bg-surface" aria-label="Liste des services">
         <div className="container-base">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {SERVICES_DATA.map((service) => (
+            {services.map((service) => (
               <ServiceCard key={service.slug} service={service} />
             ))}
           </div>

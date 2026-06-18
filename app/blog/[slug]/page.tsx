@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Calendar, User, ArrowLeft, Tag } from 'lucide-react'
-import { BLOG_POSTS_DATA } from '@/lib/data'
+import { getBlogPostBySlug, getBlogPosts } from '@/lib/content'
 import { formatDate } from '@/lib/utils'
 import CtaBanner from '@/components/home/CtaBanner'
 
@@ -10,13 +10,16 @@ interface Props {
   params: Promise<{ slug: string }>
 }
 
+export const revalidate = 60
+
 export async function generateStaticParams() {
-  return BLOG_POSTS_DATA.map((p) => ({ slug: p.slug }))
+  const posts = await getBlogPosts()
+  return posts.map((p) => ({ slug: p.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const post = BLOG_POSTS_DATA.find((p) => p.slug === slug)
+  const post = await getBlogPostBySlug(slug)
   if (!post) return {}
   return {
     title: post.title,
@@ -26,10 +29,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params
-  const post = BLOG_POSTS_DATA.find((p) => p.slug === slug)
+  const post = await getBlogPostBySlug(slug)
   if (!post) notFound()
 
-  const related = BLOG_POSTS_DATA.filter((p) => p.slug !== slug).slice(0, 2)
+  const allPosts = await getBlogPosts()
+  const related = allPosts.filter((p) => p.slug !== slug).slice(0, 2)
 
   return (
     <>

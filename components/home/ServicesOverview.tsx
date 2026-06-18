@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Building2, Store, Truck, Globe, Lightbulb, ArrowRight } from 'lucide-react'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollReveal from '@/components/ui/ScrollReveal'
-import { SERVICES_DATA } from '@/lib/data'
+import { getServices } from '@/lib/content'
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   'building-2': Building2,
@@ -12,7 +12,8 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   lightbulb: Lightbulb,
 }
 
-export default function ServicesOverview() {
+export default async function ServicesOverview() {
+  const services = await getServices()
   return (
     <section className="section-padding bg-surface" aria-labelledby="services-heading">
       <div className="container-base">
@@ -24,7 +25,7 @@ export default function ServicesOverview() {
         />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES_DATA.map((service, i) => {
+          {services.map((service, i) => {
             const Icon = ICONS[service.icon ?? ''] ?? Building2
             return (
               <ScrollReveal key={service.slug} delay={i * 80}>
@@ -52,7 +53,7 @@ export default function ServicesOverview() {
           })}
 
           {/* CTA card */}
-          <ScrollReveal delay={SERVICES_DATA.length * 80}>
+          <ScrollReveal delay={services.length * 80}>
             <div className="card-base gradient-primary flex flex-col items-center justify-center p-6 text-center text-white">
               <p className="font-display text-lg font-bold">Un projet en tête ?</p>
               <p className="mt-2 text-sm text-slate-300">

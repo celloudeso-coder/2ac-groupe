@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { CheckCircle, ArrowRight, Building2, Store, Truck, Globe, Lightbulb, Phone } from 'lucide-react'
 import CtaBanner from '@/components/home/CtaBanner'
-import { SERVICES_DATA, SITE_CONFIG } from '@/lib/data'
+import { SITE_CONFIG } from '@/lib/data'
+import { getServiceBySlug, getServices } from '@/lib/content'
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   'building-2': Building2,
@@ -17,13 +18,16 @@ interface Props {
   params: Promise<{ slug: string }>
 }
 
+export const revalidate = 60
+
 export async function generateStaticParams() {
-  return SERVICES_DATA.map((s) => ({ slug: s.slug }))
+  const services = await getServices()
+  return services.map((s) => ({ slug: s.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const service = SERVICES_DATA.find((s) => s.slug === slug)
+  const service = await getServiceBySlug(slug)
   if (!service) return {}
   return {
     title: service.title,
@@ -33,11 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ServicePage({ params }: Props) {
   const { slug } = await params
-  const service = SERVICES_DATA.find((s) => s.slug === slug)
+  const service = await getServiceBySlug(slug)
   if (!service) notFound()
 
   const Icon = ICONS[service.icon ?? ''] ?? Building2
-  const otherServices = SERVICES_DATA.filter((s) => s.slug !== slug).slice(0, 3)
+  const allServices = await getServices()
+  const otherServices = allServices.filter((s) => s.slug !== slug).slice(0, 3)
 
   return (
     <>

@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
-import { CheckCircle } from 'lucide-react'
+import Image from 'next/image'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import CtaBanner from '@/components/home/CtaBanner'
-import { COMPANY_VALUES, TEAM_DATA, SITE_CONFIG } from '@/lib/data'
+import { COMPANY_VALUES } from '@/lib/data'
+import { getTeamMembers } from '@/lib/content'
 import { Zap, Shield, Handshake, Layers } from 'lucide-react'
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = { Zap, Shield, Handshake, Layers }
@@ -23,7 +24,20 @@ const TIMELINE = [
   { year: "2024", title: "Aujourd'hui", desc: "5 secteurs, 150+ projets réalisés, une équipe soudée et des clients fidèles à travers l'Afrique, l'Europe et les USA." },
 ]
 
-export default function AboutPage() {
+export const revalidate = 60
+
+export default async function AboutPage() {
+  const team = await getTeamMembers()
+  const ceo = team.find((m) => m.is_ceo) ?? team[0] ?? null
+  const ceoName = ceo?.full_name ?? 'Le Directeur Général'
+  const ceoRole = ceo?.role ?? 'Fondateur & Directeur Général, 2AC SARL'
+  const ceoInitials = ceoName
+    .split(' ')
+    .filter(Boolean)
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
   return (
     <>
       {/* Hero */}
@@ -121,12 +135,22 @@ export default function AboutPage() {
                 "Chez 2AC SARL, nous avons bâti notre réputation sur une conviction simple : nos clients méritent le meilleur. Pas seulement en termes de qualité de prestation, mais aussi en termes de transparence, de ponctualité et de respect. Chaque projet que nous acceptons, nous nous y engageons entièrement."
               </p>
               <footer className="mt-8 flex items-center justify-center gap-4">
-                <div className="h-16 w-16 rounded-full gradient-accent flex items-center justify-center text-2xl font-black text-white">
-                  DG
-                </div>
+                {ceo?.photo_url ? (
+                  <Image
+                    src={ceo.photo_url}
+                    alt={`Photo de ${ceoName}`}
+                    width={64}
+                    height={64}
+                    className="h-16 w-16 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="h-16 w-16 rounded-full gradient-accent flex items-center justify-center text-2xl font-black text-white" aria-hidden>
+                    {ceoInitials}
+                  </div>
+                )}
                 <div className="text-left">
-                  <p id="ceo-heading" className="font-display font-bold text-white">Le Directeur Général</p>
-                  <p className="text-sm text-slate-400">Fondateur & DG, 2AC SARL</p>
+                  <p id="ceo-heading" className="font-display font-bold text-white">{ceoName}</p>
+                  <p className="text-sm text-slate-400">{ceoRole}</p>
                 </div>
               </footer>
             </blockquote>

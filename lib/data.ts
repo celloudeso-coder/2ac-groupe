@@ -224,6 +224,54 @@ export const FEATURED_PROJECTS: Omit<Project, 'id' | 'created_at' | 'updated_at'
   },
 ]
 
+// Portfolio complet (jeu de secours si Supabase est vide / indisponible).
+// Inclut les projets phares ci-dessus + des réalisations non mises en avant.
+export const PROJECTS_DATA: Omit<Project, 'id' | 'created_at' | 'updated_at'>[] = [
+  ...FEATURED_PROJECTS,
+  {
+    slug: 'magasin-carreaux-ratoma',
+    title: 'Aménagement showroom carreaux',
+    service_id: null,
+    description:
+      "Conception et réalisation complète d'un showroom de 200 m² pour l'exposition de carreaux et produits de finition, incluant une zone conseil et un espace de stockage.",
+    location: 'Ratoma, Conakry',
+    images: [],
+    cover_image: null,
+    project_date: '2023-05-01',
+    featured: false,
+    sort_order: 4,
+    status: 'published',
+  },
+  {
+    slug: 'expeditions-europe-2023',
+    title: 'Expéditions express — Europe 2023',
+    service_id: null,
+    description:
+      "Traitement de plus de 800 expéditions express vers la France, la Belgique et le Royaume-Uni en 2023, avec un taux de livraison dans les délais de 99,2 %.",
+    location: 'Conakry → Europe',
+    images: [],
+    cover_image: null,
+    project_date: '2023-12-31',
+    featured: false,
+    sort_order: 5,
+    status: 'published',
+  },
+  {
+    slug: 'import-carreaux-espagne',
+    title: "Import de carreaux depuis l'Espagne",
+    service_id: null,
+    description:
+      "Organisation de 4 conteneurs de carreaux et produits de finition depuis Valence (Espagne) pour approvisionner des promoteurs immobiliers guinéens.",
+    location: 'Espagne → Conakry',
+    images: [],
+    cover_image: null,
+    project_date: '2024-02-01',
+    featured: false,
+    sort_order: 6,
+    status: 'published',
+  },
+]
+
 export const TESTIMONIALS_DATA: Omit<Testimonial, 'id' | 'created_at'>[] = [
   {
     author_name: 'Mamadou Baldé',
@@ -263,7 +311,18 @@ export const BLOG_POSTS_DATA: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>
     title: '5 critères essentiels pour bien choisir vos carreaux',
     excerpt:
       "Résistance, format, coefficient de glissance, entretien : notre guide pratique pour ne pas se tromper lors de l'achat de carreaux pour votre maison ou votre commerce.",
-    body: null,
+    body: `<p>Choisir des carreaux ne se résume pas à une question de couleur. Un mauvais choix peut entraîner des fissures, des glissades ou une usure prématurée. Voici les 5 critères que nos conseillers passent systématiquement en revue avec nos clients.</p>
+<h2>1. La résistance à l'usure (classe PEI)</h2>
+<p>La classe PEI (de I à V) indique la capacité d'un carreau à résister au passage. Pour une chambre, un PEI II suffit ; pour un salon ou un couloir, visez PEI III ou IV ; pour un commerce ou un hall très fréquenté, exigez du PEI V.</p>
+<h2>2. Le coefficient de glissance</h2>
+<p>Indispensable pour les salles de bains, cuisines, terrasses et abords de piscine. Recherchez les normes R10 à R13 (plus le chiffre est élevé, plus le carreau est antidérapant). Un carreau brillant est élégant mais glissant une fois mouillé.</p>
+<h2>3. Le format et l'effet visuel</h2>
+<p>Les grands formats (60×60, 80×80) agrandissent visuellement une pièce et réduisent le nombre de joints. Les petits formats conviennent mieux aux surfaces courbes et aux douches. Pensez à la pose : un grand format exige un sol parfaitement plan.</p>
+<h2>4. La porosité et l'absorption d'eau</h2>
+<p>La porcelaine (grès cérame pleine masse) absorbe très peu l'eau : idéale pour l'extérieur et les pièces humides sous notre climat. La faïence, plus poreuse, est réservée aux murs intérieurs.</p>
+<h2>5. L'entretien et la durabilité</h2>
+<p>Un carreau rectifié et traité se nettoie plus facilement et vieillit mieux. Prévoyez toujours 5 à 10 % de carreaux supplémentaires pour les coupes et les remplacements futurs.</p>
+<p><strong>Besoin d'un conseil personnalisé ?</strong> Passez à notre showroom de Lambanyi : nous vous aidons à choisir le carreau adapté à chaque pièce et à votre budget.</p>`,
     cover_image: null,
     author: 'Équipe 2AC SARL',
     categories: ['BTP', 'Commerce'],
@@ -275,7 +334,18 @@ export const BLOG_POSTS_DATA: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>
     title: "Expédition express vers l'Europe : comment ça marche ?",
     excerpt:
       "De la collecte de votre colis à Conakry jusqu'à la livraison en France ou en Belgique en moins de 7 jours : découvrez le processus étape par étape de notre service de transport international.",
-    body: null,
+    body: `<p>Envoyer un colis de Conakry vers l'Europe en moins d'une semaine, c'est possible. Voici comment se déroule une expédition avec 2AC SARL, étape par étape.</p>
+<h2>Étape 1 — La prise en charge</h2>
+<p>Vous déposez votre colis dans nos locaux à Lambanyi, ou nous venons le récupérer. Nous pesons, mesurons et vérifions le contenu avec vous afin d'établir le bon tarif et de respecter la réglementation douanière.</p>
+<h2>Étape 2 — L'emballage sécurisé</h2>
+<p>Chaque envoi est ré-emballé selon les standards internationaux : protection contre les chocs, étanchéité, étiquetage normalisé. Un colis bien emballé, c'est un colis qui arrive intact.</p>
+<h2>Étape 3 — Le suivi en ligne</h2>
+<p>Vous recevez un numéro de suivi qui vous permet, via notre plateforme partenaire, de localiser votre colis à chaque étape : départ de Conakry, transit, arrivée en Europe, livraison finale.</p>
+<h2>Étape 4 — Le dédouanement</h2>
+<p>Nous gérons les formalités douanières au départ comme à l'arrivée. Notre maîtrise des procédures évite les blocages et les frais imprévus qui rallongent souvent les délais.</p>
+<h2>Étape 5 — La livraison</h2>
+<p>Votre destinataire est livré à domicile en France, en Belgique, au Royaume-Uni ou aux États-Unis, généralement en moins de 7 jours ouvrés, avec un taux de réussite de 99 %.</p>
+<p><strong>Un colis à envoyer ?</strong> Contactez-nous pour obtenir un devis et le délai exact selon la destination.</p>`,
     cover_image: null,
     author: 'Équipe 2AC SARL',
     categories: ['Logistique'],
@@ -287,7 +357,18 @@ export const BLOG_POSTS_DATA: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>
     title: "Import-Export en Guinée : 5 secteurs porteurs en 2025",
     excerpt:
       "Matériaux de construction, produits alimentaires, équipements solaires... Quels sont les créneaux les plus prometteurs pour le commerce international guinéen cette année ?",
-    body: null,
+    body: `<p>L'économie guinéenne se diversifie et la demande de produits importés ne cesse de croître. Voici les cinq secteurs sur lesquels nous voyons le plus d'opportunités cette année.</p>
+<h2>1. Les matériaux de construction</h2>
+<p>Avec l'essor de l'immobilier à Conakry et dans les régions, la demande en ciment, carreaux, acier et équipements sanitaires reste très forte. Importer en volume permet de casser les prix.</p>
+<h2>2. Les produits agroalimentaires</h2>
+<p>Riz, huile, sucre, produits transformés : la chaîne d'approvisionnement alimentaire offre des marges régulières, à condition de maîtriser la logistique du froid et les délais.</p>
+<h2>3. Les équipements solaires</h2>
+<p>Panneaux, batteries et kits solaires répondent à un besoin réel d'autonomie énergétique. Un marché en pleine expansion, soutenu par la baisse des coûts mondiaux.</p>
+<h2>4. Les équipements industriels et agricoles</h2>
+<p>Groupes électrogènes, pompes, petit matériel agricole : ces biens d'équipement accompagnent la modernisation des PME guinéennes.</p>
+<h2>5. Les biens de grande consommation</h2>
+<p>Électroménager, téléphonie, produits d'hygiène : une demande de masse, portée par une population jeune et urbaine.</p>
+<p><strong>Vous souhaitez importer ou exporter ?</strong> Notre équipe vous accompagne sur le sourcing, la négociation, le transport et le dédouanement, de bout en bout.</p>`,
     cover_image: null,
     author: 'Équipe 2AC SARL',
     categories: ['Import-Export', 'Conseil'],

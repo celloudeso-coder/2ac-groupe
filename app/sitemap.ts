@@ -1,9 +1,13 @@
 import type { MetadataRoute } from 'next'
-import { SERVICES_DATA, BLOG_POSTS_DATA } from '@/lib/data'
+import { getServices, getBlogPosts } from '@/lib/content'
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.2ac-gn.com'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 60
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [services, posts] = await Promise.all([getServices(), getBlogPosts()])
+
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
     { url: `${BASE_URL}/a-propos`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
@@ -13,14 +17,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.9 },
   ]
 
-  const serviceRoutes: MetadataRoute.Sitemap = SERVICES_DATA.map((s) => ({
+  const serviceRoutes: MetadataRoute.Sitemap = services.map((s) => ({
     url: `${BASE_URL}/services/${s.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: 0.8,
   }))
 
-  const blogRoutes: MetadataRoute.Sitemap = BLOG_POSTS_DATA.map((p) => ({
+  const blogRoutes: MetadataRoute.Sitemap = posts.map((p) => ({
     url: `${BASE_URL}/blog/${p.slug}`,
     lastModified: p.published_at ? new Date(p.published_at) : new Date(),
     changeFrequency: 'monthly',

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { ArrowRight, Calendar, User, Tag } from 'lucide-react'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollReveal from '@/components/ui/ScrollReveal'
-import { BLOG_POSTS_DATA } from '@/lib/data'
+import { getBlogPosts } from '@/lib/content'
 import { formatDate } from '@/lib/utils'
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -13,7 +13,8 @@ const CATEGORY_COLORS: Record<string, string> = {
   Conseil: 'bg-rose-100 text-rose-700',
 }
 
-export default function BlogPreview() {
+export default async function BlogPreview() {
+  const posts = (await getBlogPosts()).slice(0, 3)
   return (
     <section className="section-padding bg-white" aria-labelledby="blog-heading">
       <div className="container-base">
@@ -31,7 +32,7 @@ export default function BlogPreview() {
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {BLOG_POSTS_DATA.map((post, i) => (
+          {posts.map((post, i) => (
             <ScrollReveal key={post.slug} delay={i * 100}>
               <article className="card-base group flex flex-col overflow-hidden">
                 {/* Category stripe */}

@@ -109,18 +109,21 @@ NEXT_PUBLIC_SITE_URL=https://www.2ac-gn.com
 
 ## Base de données Supabase
 
-Le schéma complet (tables, politiques RLS, données initiales) se trouve dans :
+Deux migrations à exécuter **dans l'ordre** :
 
 ```text
-supabase/migrations/001_initial.sql
+supabase/migrations/001_initial.sql      # schéma + RLS + coordonnées + 5 services
+supabase/migrations/002_seed_content.sql # contenu : projets, articles, témoignages, équipe
 ```
 
-**Pour l'appliquer :**
+**Pour les appliquer :**
 
 1. Créer un projet sur [supabase.com](https://supabase.com).
 2. Ouvrir le **SQL Editor** dans le tableau de bord Supabase.
-3. Copier-coller le contenu de `supabase/migrations/001_initial.sql` et exécuter.
-4. Récupérer l'URL du projet et les clés API (Settings → API) pour `.env.local`.
+3. Copier-coller le contenu de `001_initial.sql`, exécuter, puis faire de même avec `002_seed_content.sql`.
+4. Récupérer l'URL du projet et la clé publishable (Settings → API Keys) pour `.env.local`.
+
+> Le seed `002` est **idempotent** : il peut être rejoué sans créer de doublon. Le « mot du dirigeant » y est volontairement en `status = 'draft'` tant que le **nom réel** et la **photo** ne sont pas fournis (à publier ensuite).
 
 **Tables créées :** `profiles`, `services`, `projects`, `testimonials`, `blog_posts`, `team_members`, `contact_submissions`, `site_settings`.
 
@@ -130,7 +133,13 @@ Les politiques **RLS (Row Level Security)** garantissent que :
 - seuls les administrateurs peuvent créer/modifier/supprimer du contenu ;
 - les soumissions de formulaires sont insérables publiquement mais lisibles uniquement par les administrateurs.
 
-> ⚠️ Actuellement, les contenus affichés (services, projets, articles, témoignages) proviennent de [`lib/data.ts`](lib/data.ts) pour garantir un site fonctionnel immédiatement. Pour brancher le site sur Supabase, remplacer les imports depuis `lib/data.ts` par des requêtes Supabase (les types correspondent déjà dans [`lib/types.ts`](lib/types.ts)).
+### Comment le contenu est servi
+
+Les pages lisent le contenu via [`lib/content.ts`](lib/content.ts) — des fonctions **asynchrones** (`getServices()`, `getProjects()`, `getBlogPosts()`, `getTestimonials()`, `getTeamMembers()`, `getSiteSettings()`…) exécutées dans des **Server Components** et interrogeant Supabase en lecture seule (filtre `status = 'published'`, tris côté requête).
+
+- **Revalidation ISR** : les pages déclarent `export const revalidate = 60`. Une modification dans Supabase apparaît sur le site **dans la minute**, sans redéploiement.
+- **Fallback gracieux** : si Supabase n'est pas configuré ou renvoie une erreur, le site retombe automatiquement sur les données statiques de [`lib/data.ts`](lib/data.ts) (jeu de secours) et logue l'erreur côté serveur — le site ne plante jamais.
+- Les constantes de marque (nom, téléphone, **horaires**, libellés de navigation) restent dans `lib/data.ts` (`SITE_CONFIG`) : source unique garantissant des **horaires uniformes** partout, y compris dans les composants client (en-tête).
 
 ---
 
@@ -158,11 +167,12 @@ Les politiques **RLS (Row Level Security)** garantissent que :
 │   ├── services/             # ServiceCard
 │   └── ui/                   # Button, SectionHeader, AnimatedCounter, ScrollReveal
 ├── lib/
-│   ├── data.ts               # Contenu éditorial (services, projets, blog…)
+│   ├── content.ts            # Accès contenu Supabase (async) + fallback
+│   ├── data.ts               # Données de secours + constantes de marque
 │   ├── types.ts              # Types TypeScript
 │   ├── utils.ts              # Utilitaires (cn, formatDate…)
 │   └── supabase/             # Clients Supabase (client + server)
-├── supabase/migrations/      # Migration SQL (schéma + RLS + seed)
+├── supabase/migrations/      # Migrations SQL (schéma + RLS + seed contenu)
 ├── public/                   # robots.txt, assets statiques
 ├── middleware.ts             # Middleware Next.js
 ├── next.config.ts            # Config Next.js (images, en-têtes de sécurité)
@@ -263,6 +273,6 @@ Vercel détecte automatiquement Next.js. Les déploiements suivants se font à c
 
 ## Crédits
 
-Développement : **Groupe Wolikhai**
+Développement : **LynxaTech (LYNXA SARL)**
 
 © 2AC SARL — Tous droits réservés.

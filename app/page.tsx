@@ -14,6 +14,10 @@ export const metadata: Metadata = {
     "2AC SARL : entreprise multisectorielle guinéenne spécialisée en BTP, commerce de carreaux, logistique internationale, import-export et conseil. Basée à Lambanyi, Conakry.",
 }
 
+// Revalidation ISR : les modifications faites dans Supabase apparaissent
+// au plus tard après 60 secondes, sans redéploiement.
+export const revalidate = 60
+
 export default function HomePage() {
   return (
     <>

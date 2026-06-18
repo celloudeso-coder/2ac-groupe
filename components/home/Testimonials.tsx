@@ -1,7 +1,7 @@
 import { Star, Quote } from 'lucide-react'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollReveal from '@/components/ui/ScrollReveal'
-import { TESTIMONIALS_DATA } from '@/lib/data'
+import { getTestimonials } from '@/lib/content'
 
 function Stars({ rating }: { rating: number }) {
   return (
@@ -17,7 +17,8 @@ function Stars({ rating }: { rating: number }) {
   )
 }
 
-export default function Testimonials() {
+export default async function Testimonials() {
+  const testimonials = await getTestimonials()
   return (
     <section className="section-padding bg-primary" aria-labelledby="testimonials-heading">
       <div className="container-base">
@@ -29,7 +30,7 @@ export default function Testimonials() {
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {TESTIMONIALS_DATA.map((t, i) => (
+          {testimonials.map((t, i) => (
             <ScrollReveal key={t.author_name} delay={i * 100}>
               <blockquote className="card-base flex h-full flex-col p-6">
                 <Quote className="mb-3 h-8 w-8 text-accent/40" aria-hidden />
