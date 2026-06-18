@@ -73,7 +73,7 @@ export default function Header() {
         <div className="flex h-16 items-center justify-between gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center" aria-label="2AC GROUPE — Accueil">
-            <Logo height={34} priority />
+            <Logo height={48} priority />
           </Link>
 
           {/* Desktop nav */}
