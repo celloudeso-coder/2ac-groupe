@@ -259,11 +259,13 @@ Vercel détecte automatiquement Next.js. Les déploiements suivants se font à c
 - Configurez le domaine `2ac-gn.com` dans **Settings → Domains**.
 - Vérifiez que `NEXT_PUBLIC_SITE_URL` pointe vers le domaine final (pour le sitemap et les balises Open Graph).
 
-### Redirections 301 des anciennes URLs
+### Redirections des anciennes URLs
 
-Pour préserver le référencement, les anciennes URLs du site LWS sont redirigées dans la constante `LEGACY_REDIRECTS` de [`next.config.ts`](next.config.ts).
+Pour préserver le référencement, les anciennes URLs du site Laravel sont redirigées dans la constante `LEGACY_REDIRECTS` de [`next.config.ts`](next.config.ts). Cartographie **vérifiée en production** (juin 2026) : `/about → /a-propos`, `/service → /services`, `/domaines/* → /services/*`, `/blog-detail/:id → /blog` (ancien blog = Lorem Ipsum, pas de mapping article), `/login → /`.
 
-> ⚠️ Les correspondances actuelles sont des **hypothèses** (`/domaines/...`, `/blog-detail/ID`). **Avant la mise en ligne**, remplacez-les par les vraies anciennes URLs (relevées dans l'ancien `sitemap.xml` ou la Google Search Console) et ajoutez les redirections d'articles 1:1 `ID → slug`. Un 301 erroné est définitif et mis en cache par Google.
+> `permanent: true` renvoie un **308** (méthode préservée), traité comme un 301 par Google. **Après mise en ligne**, testez chaque ancienne URL : elle doit renvoyer un 308 vers la nouvelle, sans chaîne ni boucle de redirection.
+>
+> **Espace admin indépendant** : ne pas lier `/admin` depuis la navigation ou le pied de page publics ; il est exclu du `sitemap.ts` et bloqué dans `robots.txt` (`Disallow: /admin`). Accès uniquement via son URL dédiée (`/admin/login`).
 
 ---
 

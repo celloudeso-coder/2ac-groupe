@@ -1,38 +1,36 @@
 import type { NextConfig } from 'next'
 
 /**
- * Redirections 301 des anciennes URLs (site LWS) → nouvelles URLs.
+ * Redirections permanentes des anciennes URLs → nouvelles URLs.
  *
- * ⚠️ À CONFIRMER AVANT MISE EN LIGNE : les `source` ci-dessous sont des
- * hypothèses basées sur la structure annoncée (/domaines/..., /blog-detail/ID).
- * Remplacez-les par les VRAIES anciennes URLs (relevez-les dans l'ancien
- * sitemap.xml ou la Search Console). Un 301 erroné est permanent et mis en
- * cache par Google : ne déployez ces règles qu'une fois la liste validée.
+ * Cartographie VÉRIFIÉE sur le site Laravel en production
+ * (https://www.2ac-gn.com), juin 2026.
  *
- * `permanent: true` = 301 (transfère le « jus SEO »).
+ * `permanent: true` renvoie un 308 (méthode HTTP préservée), traité comme un
+ * 301 par Google : le « jus SEO » est transféré. Pour des pages GET, le 308
+ * est équivalent au 301 côté référencement.
+ *
+ * L'ancien blog était intégralement du Lorem Ipsum → redirection globale de
+ * `/blog-detail/:id` vers `/blog` (aucun article réel à mapper en 1:1).
  */
 const LEGACY_REDIRECTS: { source: string; destination: string; permanent: boolean }[] = [
-  // --- Pages de domaines/services ---
-  { source: '/domaines/btp', destination: '/services/btp', permanent: true },
+  // Pages statiques (slugs anglais → français)
+  { source: '/about', destination: '/a-propos', permanent: true },
+  { source: '/service', destination: '/services', permanent: true },
+
+  // Pages de domaines/services (slugs réels de l'ancien site)
   { source: '/domaines/batiment-travaux-publics', destination: '/services/btp', permanent: true },
-  { source: '/domaines/commerce-general', destination: '/services/commerce-general', permanent: true },
-  { source: '/domaines/commerce', destination: '/services/commerce-general', permanent: true },
-  { source: '/domaines/logistique', destination: '/services/logistique-transport', permanent: true },
-  { source: '/domaines/logistique-transport', destination: '/services/logistique-transport', permanent: true },
   { source: '/domaines/import-export', destination: '/services/import-export', permanent: true },
-  { source: '/domaines/conseil', destination: '/services/conseil', permanent: true },
+  { source: '/domaines/logistique-transport', destination: '/services/logistique-transport', permanent: true },
+  { source: '/domaines/commerce-general', destination: '/services/commerce-general', permanent: true },
+  // NB : /domaines/conseil n'existait pas sur l'ancien site (pas de page dédiée).
 
-  // --- Articles de blog ---
-  // Idéal : une règle 1:1 par ancien ID → nouveau slug (meilleur pour le SEO).
-  // Exemple à compléter avec la correspondance réelle ID → slug :
-  // { source: '/blog-detail/12', destination: '/blog/5-criteres-pour-choisir-vos-carreaux', permanent: true },
+  // Blog : ancien contenu = Lorem Ipsum → redirection globale (aucun article réel)
+  { source: '/blog-detail/:id', destination: '/blog', permanent: true },
 
-  // --- Pages génériques éventuelles ---
-  { source: '/accueil', destination: '/', permanent: true },
-  { source: '/a-propos-de-nous', destination: '/a-propos', permanent: true },
-  { source: '/nos-services', destination: '/services', permanent: true },
-  { source: '/nos-realisations', destination: '/realisations', permanent: true },
-  { source: '/nous-contacter', destination: '/contact', permanent: true },
+  // Ancienne connexion abandonnée → accueil. L'admin a son URL dédiée
+  // (/admin/login), non liée depuis le site public.
+  { source: '/login', destination: '/', permanent: true },
 ]
 
 const nextConfig: NextConfig = {
@@ -68,14 +66,7 @@ const nextConfig: NextConfig = {
     ]
   },
   async redirects() {
-    return [
-      ...LEGACY_REDIRECTS,
-      // Filet de sécurité : tout ancien lien d'article non mappé 1:1 ci-dessus
-      // est renvoyé vers l'index du blog plutôt que de tomber en 404.
-      // `permanent: false` (302) volontaire : à remplacer par des 301 1:1
-      // quand la correspondance ID → slug est connue.
-      { source: '/blog-detail/:id', destination: '/blog', permanent: false },
-    ]
+    return LEGACY_REDIRECTS
   },
 }
 
