@@ -83,18 +83,27 @@ npm run dev
 ```bash
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=https://votre-projet.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=votre-anon-key
-SUPABASE_SERVICE_ROLE_KEY=votre-service-role-key
+# Nouvelle clé publishable (sb_publishable_...) — l'ancienne anon key reste acceptée
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxxxxx
+# Clé secrète server-only (optionnelle, pour usages côté serveur privilégiés)
+# SUPABASE_SECRET_KEY=sb_secret_xxxxxxxx
 
 # Email (Resend)
 RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxx
 CONTACT_EMAIL=contact@2ac-gn.com
+# Expéditeur des emails. Utiliser onboarding@resend.dev tant que le domaine
+# 2ac-gn.com n'est pas vérifié dans Resend, puis no-reply@2ac-gn.com.
+RESEND_FROM=onboarding@resend.dev
 
 # Site
 NEXT_PUBLIC_SITE_URL=https://www.2ac-gn.com
 ```
 
+> ℹ️ Le code accepte aussi l'ancien nom `NEXT_PUBLIC_SUPABASE_ANON_KEY` en repli, pour rester compatible avec les projets Supabase existants.
+>
 > ℹ️ Le site fonctionne même sans Supabase/Resend configurés : les formulaires se dégradent proprement (l'envoi échoue silencieusement côté serveur sans bloquer l'utilisateur). Pour la production, configurez les deux services.
+>
+> ⚠️ **Resend en mode test** : tant que le domaine `2ac-gn.com` n'est pas vérifié, l'expéditeur `onboarding@resend.dev` ne peut envoyer que vers l'adresse du titulaire du compte Resend. Pour tester les notifications avant la vérification du domaine, pointez temporairement `CONTACT_EMAIL` vers cette adresse.
 
 ---
 
