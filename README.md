@@ -256,7 +256,12 @@ Interface complète pour gérer le contenu **sans ouvrir Supabase**. Même ident
 3. Ajoutez toutes les variables d'environnement dans **Environment Variables**.
 4. **Deploy**. Vercel détecte Next.js automatiquement.
 
-**Après le premier déploiement :** configurez le domaine `2ac-gn.com` et vérifiez `NEXT_PUBLIC_SITE_URL`.
+**Après le premier déploiement :**
+
+1. **Domaine** : ajoutez `2ac-gn.com` (Settings → Domains) et repointez les **A/CNAME** vers Vercel **en conservant les MX** (email). Mettez `NEXT_PUBLIC_SITE_URL=https://www.2ac-gn.com`.
+2. **Supabase Auth** : dans **Authentication → URL Configuration**, ajoutez l'URL Vercel et `https://www.2ac-gn.com` (Site URL + Redirect URLs), sinon la connexion admin peut échouer en prod.
+3. **Vérifier le CSP** : ouvrez la **console du navigateur** sur le déploiement *preview* — aucune ressource ne doit être bloquée (`Refused to load…`). Si besoin, ajustez la directive concernée dans `next.config.ts`.
+   > Sur les *previews*, la barre d'outils Vercel (`vercel.live`) est bloquée par le CSP (warnings cosmétiques sans impact sur le site ni le domaine de prod). À whitelister seulement si vous utilisez cette barre.
 
 ### Redirections 301 des anciennes URLs
 
@@ -270,7 +275,7 @@ Les anciennes URLs sont redirigées dans `LEGACY_REDIRECTS` de [`next.config.ts`
 - **SEO** : titres/descriptions uniques, Schema.org `LocalBusiness`, `sitemap.xml`, `robots.txt`, Open Graph + Twitter Card, back-office en `noindex`.
 - **Performance** : `next/image` (WebP/AVIF), verre dégradé sur mobile, bundle Tiptap chargé **uniquement** dans le back-office (pages publiques ≈ 102–119 kB JS).
 - **RGPD** : bannière cookies, pages légales, consentement explicite (non pré-coché).
-- **Sécurité** : en-têtes HSTS/X-Frame-Options/etc., honeypot anti-spam, validation client **et** serveur, RLS Supabase, `is_admin()` revérifié sur chaque mutation.
+- **Sécurité** : **Content-Security-Policy** cadrée sur les ressources réelles (Supabase API/realtime, iframe Google Maps, Storage) — bloque le chargement de scripts tiers ; + `Strict-Transport-Security` (HSTS preload), `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy` resserrée et `X-XSS-Protection: 0` (reco OWASP). Tout est centralisé dans [`next.config.ts`](next.config.ts). Côté applicatif : honeypot anti-spam, validation client **et** serveur, RLS Supabase, `is_admin()` revérifié sur chaque mutation, aucune clé service exposée au client.
 
 ---
 
