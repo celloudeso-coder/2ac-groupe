@@ -33,6 +33,37 @@ const LEGACY_REDIRECTS: { source: string; destination: string; permanent: boolea
   { source: '/login', destination: '/', permanent: true },
 ]
 
+/**
+ * Content-Security-Policy.
+ *
+ * Cadrée sur les ressources réellement chargées par le site :
+ *  - Supabase (API REST/Auth + websocket realtime) en `connect-src` ;
+ *  - images Supabase Storage + `data:`/`blob:` (next/image) en `img-src` ;
+ *  - iframe Google Maps (page contact) en `frame-src` ;
+ *  - polices auto-hébergées par next/font → pas d'origine externe.
+ *
+ * `'unsafe-inline'` est nécessaire (scripts d'amorçage / payload RSC inline et
+ * styles inline de Next/Tailwind, faute de nonce). Cela bloque tout de même le
+ * chargement de scripts depuis une origine tierce (principal vecteur XSS).
+ * `'unsafe-eval'` est volontairement absent (non requis par Next 15 en prod).
+ */
+const cspDirectives = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "form-action 'self'",
+  "img-src 'self' data: blob: https://*.supabase.co",
+  "font-src 'self' data:",
+  "style-src 'self' 'unsafe-inline'",
+  "script-src 'self' 'unsafe-inline'",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co",
+  "frame-src 'self' https://www.google.com",
+  "worker-src 'self' blob:",
+  "manifest-src 'self'",
+  'upgrade-insecure-requests',
+].join('; ')
+
 const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -49,13 +80,15 @@ const nextConfig: NextConfig = {
       {
         source: '/(.*)',
         headers: [
+          { key: 'Content-Security-Policy', value: cspDirectives },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'DENY' },
-          { key: 'X-XSS-Protection', value: '1; mode=block' },
+          // Filtre XSS legacy désactivé (recommandation OWASP) : le CSP prend le relais.
+          { key: 'X-XSS-Protection', value: '0' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           {
             key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(self)',
+            value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()',
           },
           {
             key: 'Strict-Transport-Security',
