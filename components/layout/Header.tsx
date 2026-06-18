@@ -70,10 +70,10 @@ export default function Header() {
 
       {/* Main nav */}
       <nav aria-label="Navigation principale" className="container-base">
-        <div className="flex h-16 items-center justify-between gap-4">
+        <div className="flex h-20 items-center justify-between gap-4">
           {/* Logo */}
           <Link href="/" className="flex items-center" aria-label="2AC GROUPE — Accueil">
-            <Logo height={48} priority />
+            <Logo height={50} priority />
           </Link>
 
           {/* Desktop nav */}

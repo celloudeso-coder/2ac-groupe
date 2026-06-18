@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 interface Props {
-  /** Hauteur rendue en pixels (la largeur suit le ratio 1.469). */
+  /** Hauteur rendue en pixels (la largeur suit le ratio du logo recadré). */
   height?: number
   /** Force une variante précise au lieu du basculement automatique selon le thème. */
   variant?: 'auto' | 'light' | 'dark'
@@ -10,7 +10,7 @@ interface Props {
   priority?: boolean
 }
 
-const RATIO = 470 / 320
+const RATIO = 440 / 149
 
 /**
  * Logo officiel « 2AC GROUPE ».
