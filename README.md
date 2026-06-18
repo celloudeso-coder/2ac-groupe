@@ -1,6 +1,8 @@
-# 2AC SARL — Site web vitrine
+# 2AC GROUPE — Site web vitrine
 
-Site web professionnel de **2AC SARL**, entreprise multisectorielle basée à Lambanyi, Conakry (République de Guinée) : BTP, commerce de carreaux & finition, logistique internationale, import-export et conseil.
+Site web professionnel de **2AC GROUPE** (raison sociale : **2AC SARL**), entreprise multisectorielle basée à Lambanyi, Conakry (République de Guinée) : BTP, commerce de carreaux & finition, logistique internationale, import-export et conseil.
+
+> **Marque vs raison sociale** : la marque affichée partout est **2AC GROUPE** (`SITE_CONFIG.name`). La dénomination légale **2AC SARL** (`SITE_CONFIG.legalName`) n'est utilisée que là où elle a une valeur juridique (mentions légales, copyright).
 
 ---
 
@@ -8,6 +10,7 @@ Site web professionnel de **2AC SARL**, entreprise multisectorielle basée à La
 
 - [Aperçu](#aperçu)
 - [Stack technique](#stack-technique)
+- [Design system](#design-system)
 - [Démarrage rapide](#démarrage-rapide)
 - [Variables d'environnement](#variables-denvironnement)
 - [Base de données Supabase](#base-de-données-supabase)
@@ -22,7 +25,7 @@ Site web professionnel de **2AC SARL**, entreprise multisectorielle basée à La
 
 ## Aperçu
 
-Site **responsive (mobile-first)**, **accessible (WCAG 2.1 AA)**, **optimisé SEO** et **conforme RGPD**, conçu pour positionner 2AC SARL comme un partenaire unique et fiable, de bout en bout.
+Site **responsive (mobile-first)**, **accessible (WCAG 2.1 AA)**, **optimisé SEO** et **conforme RGPD**, conçu pour positionner 2AC GROUPE comme un partenaire unique et fiable, de bout en bout.
 
 - 12 pages (accueil, à propos, 5 services, réalisations, blog, contact, pages légales)
 - Formulaires de contact et de devis avec stockage en base + notification email
@@ -44,6 +47,20 @@ Site **responsive (mobile-first)**, **accessible (WCAG 2.1 AA)**, **optimisé SE
 | Emails | Resend |
 | Polices | Inter (corps) + Manrope (titres) |
 | Hébergement | Vercel |
+
+---
+
+## Design system
+
+La charte est dérivée du **logo** et centralisée dans [`tailwind.config.ts`](tailwind.config.ts) + les variables CSS de [`app/globals.css`](app/globals.css). **Aucune couleur n'est codée en dur dans les composants** : tout passe par des tokens.
+
+- **Thème sombre par défaut** (cohérent avec le logo sur fond noir), thème clair prévu. Les couleurs sont exposées en variables CSS (canaux RGB pour gérer l'opacité Tailwind via `<alpha-value>`).
+- **Rouge de marque constant** `#E53323` (token `brand`) — réservé aux accents : CTA, liens actifs, traits, surbrillances, dégradés. À utiliser avec parcimonie.
+- **Tokens sémantiques** (basculent clair/sombre) : `background`, `surface` (+ `surface-2`, `surface-3`), `ink` (texte principal), `muted`, `faint`, `line` (bordures), plus des tokens « verre » pour les effets glassmorphism.
+- **Alias rétro-compatibles** : les anciens `primary`/`accent` pointent désormais vers le rouge de marque (les CTA restent rouges).
+- **Composants UI** : `Logo`, `Button`, `SectionHeader`, `PageHero`, `AnimatedCounter`, `ScrollReveal`, `LiquidBackground` (fond animé) dans [`components/ui/`](components/ui/).
+
+> Le logo est rendu via le composant [`Logo`](components/ui/Logo.tsx) (et non une image en dur) pour s'adapter automatiquement au thème.
 
 ---
 
@@ -109,21 +126,26 @@ NEXT_PUBLIC_SITE_URL=https://www.2ac-gn.com
 
 ## Base de données Supabase
 
-Deux migrations à exécuter **dans l'ordre** :
+Trois migrations à exécuter **dans l'ordre** :
 
 ```text
-supabase/migrations/001_initial.sql      # schéma + RLS + coordonnées + 5 services
-supabase/migrations/002_seed_content.sql # contenu : projets, articles, témoignages, équipe
+supabase/migrations/001_initial.sql        # schéma + RLS + coordonnées + 5 services
+supabase/migrations/002_seed_content.sql   # contenu : projets, articles, témoignages, équipe
+supabase/migrations/003_fix_contact_rls.sql # correctif RLS : insertion publique du formulaire
 ```
 
 **Pour les appliquer :**
 
 1. Créer un projet sur [supabase.com](https://supabase.com).
 2. Ouvrir le **SQL Editor** dans le tableau de bord Supabase.
-3. Copier-coller le contenu de `001_initial.sql`, exécuter, puis faire de même avec `002_seed_content.sql`.
+3. Copier-coller et exécuter `001_initial.sql`, puis `002_seed_content.sql`, puis `003_fix_contact_rls.sql`.
 4. Récupérer l'URL du projet et la clé publishable (Settings → API Keys) pour `.env.local`.
 
-> Le seed `002` est **idempotent** : il peut être rejoué sans créer de doublon. Le « mot du dirigeant » y est volontairement en `status = 'draft'` tant que le **nom réel** et la **photo** ne sont pas fournis (à publier ensuite).
+> Les seeds/correctifs `002` et `003` sont **idempotents** : ils peuvent être rejoués sans créer de doublon ni d'erreur.
+>
+> Le « mot du dirigeant » est volontairement en `status = 'draft'` tant que le **nom réel** et la **photo** ne sont pas fournis (à publier ensuite).
+>
+> La migration `003` corrige la policy d'insertion publique de `contact_submissions` (sans elle, le formulaire de contact/devis affiche un succès mais **n'enregistre rien** en base).
 
 **Tables créées :** `profiles`, `services`, `projects`, `testimonials`, `blog_posts`, `team_members`, `contact_submissions`, `site_settings`.
 
@@ -165,18 +187,20 @@ Les pages lisent le contenu via [`lib/content.ts`](lib/content.ts) — des fonct
 │   ├── home/                 # Sections de la page d'accueil
 │   ├── forms/                # ContactForm, DevisForm
 │   ├── services/             # ServiceCard
-│   └── ui/                   # Button, SectionHeader, AnimatedCounter, ScrollReveal
+│   └── ui/                   # Logo, Button, SectionHeader, PageHero,
+│                             #   AnimatedCounter, ScrollReveal, LiquidBackground
 ├── lib/
 │   ├── content.ts            # Accès contenu Supabase (async) + fallback
-│   ├── data.ts               # Données de secours + constantes de marque
+│   ├── data.ts               # Données de secours + constantes de marque (SITE_CONFIG)
 │   ├── types.ts              # Types TypeScript
 │   ├── utils.ts              # Utilitaires (cn, formatDate…)
 │   └── supabase/             # Clients Supabase (client + server)
-├── supabase/migrations/      # Migrations SQL (schéma + RLS + seed contenu)
+├── supabase/migrations/      # Migrations SQL (schéma + RLS + seed + correctifs)
 ├── public/                   # robots.txt, assets statiques
+├── app/globals.css           # Tokens de thème (variables CSS) + styles de base
 ├── middleware.ts             # Middleware Next.js
-├── next.config.ts            # Config Next.js (images, en-têtes de sécurité)
-└── tailwind.config.ts        # Design system (couleurs, typo, ombres)
+├── next.config.ts            # Config Next.js (images, en-têtes, redirections)
+└── tailwind.config.ts        # Design system (tokens couleurs, typo, ombres)
 ```
 
 ---
@@ -283,4 +307,4 @@ Pour préserver le référencement, les anciennes URLs du site Laravel sont redi
 
 Développement : **LynxaTech (LYNXA SARL)**
 
-© 2AC SARL — Tous droits réservés.
+© 2AC GROUPE (2AC SARL) — Tous droits réservés.
