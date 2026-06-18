@@ -73,15 +73,16 @@ export default function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="flex flex-col items-center rounded-xl bg-emerald-50 px-6 py-12 text-center">
-        <CheckCircle className="mb-4 h-12 w-12 text-emerald-500" aria-hidden />
-        <h3 className="font-display text-lg font-bold text-emerald-900">Message envoyé !</h3>
-        <p className="mt-2 text-sm text-emerald-700">
+      <div className="card-glass flex flex-col items-center border-emerald-500/30 px-6 py-12 text-center">
+        <CheckCircle className="mb-4 h-12 w-12 text-emerald-400" aria-hidden />
+        <h3 className="font-display text-lg font-bold text-ink">Message envoyé !</h3>
+        <p className="mt-2 text-sm text-muted">
           Merci pour votre message. Notre équipe vous répondra dans les 24 heures ouvrées.
         </p>
         <button
+          type="button"
           onClick={() => { setStatus('idle'); setForm({ full_name: '', email: '', phone: '', subject: '', message: '', consent: false, website: '' }) }}
-          className="mt-6 btn-primary px-6 py-2.5 text-sm"
+          className="mt-6 btn-brand px-6 py-2.5 text-sm"
         >
           Envoyer un autre message
         </button>
@@ -106,7 +107,7 @@ export default function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="cf-name" className="label-base">
-            Nom complet <span className="text-red-500" aria-label="requis">*</span>
+            Nom complet <span className="text-brand" aria-label="requis">*</span>
           </label>
           <input
             id="cf-name"
@@ -124,7 +125,7 @@ export default function ContactForm() {
         </div>
         <div>
           <label htmlFor="cf-email" className="label-base">
-            Email <span className="text-red-500" aria-label="requis">*</span>
+            Email <span className="text-brand" aria-label="requis">*</span>
           </label>
           <input
             id="cf-email"
@@ -170,7 +171,7 @@ export default function ContactForm() {
         </div>
         <div className="sm:col-span-2">
           <label htmlFor="cf-message" className="label-base">
-            Message <span className="text-red-500" aria-label="requis">*</span>
+            Message <span className="text-brand" aria-label="requis">*</span>
           </label>
           <textarea
             id="cf-message"
@@ -194,21 +195,21 @@ export default function ContactForm() {
               checked={form.consent}
               onChange={handleChange}
               required
-              className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 accent-primary-DEFAULT"
+              className="mt-0.5 h-4 w-4 shrink-0 rounded border-line accent-brand"
             />
-            <span className="text-xs leading-relaxed text-slate-600">
-              J'accepte que 2AC SARL collecte et traite mes données pour répondre à ma demande, conformément à notre{' '}
-              <a href="/politique-confidentialite" className="underline hover:text-primary" target="_blank" rel="noopener">
+            <span className="text-xs leading-relaxed text-muted">
+              J&apos;accepte que 2AC GROUPE collecte et traite mes données pour répondre à ma demande, conformément à notre{' '}
+              <a href="/politique-confidentialite" className="text-brand underline hover:text-brand-dark" target="_blank" rel="noopener">
                 politique de confidentialité
               </a>
-              . <span className="text-red-500">*</span>
+              . <span className="text-brand">*</span>
             </span>
           </label>
         </div>
       </div>
 
       {status === 'error' && (
-        <p role="alert" className="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+        <p role="alert" className="mt-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
           {errorMsg}
         </p>
       )}

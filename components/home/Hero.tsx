@@ -1,84 +1,72 @@
 import Link from 'next/link'
-import { ArrowRight, Phone } from 'lucide-react'
-import { SITE_CONFIG } from '@/lib/data'
+import Image from 'next/image'
+import { ArrowRight } from 'lucide-react'
+import { STATS } from '@/lib/data'
+import LiquidBackground from '@/components/ui/LiquidBackground'
+import AnimatedCounter from '@/components/ui/AnimatedCounter'
 
 export default function Hero() {
   return (
-    <section
-      className="relative overflow-hidden gradient-hero text-white"
-      aria-labelledby="hero-heading"
-    >
-      {/* Decorative pattern */}
-      <div className="absolute inset-0 opacity-5" aria-hidden>
-        <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-      </div>
+    <section className="relative overflow-hidden bg-background text-ink" aria-labelledby="hero-heading">
+      {/* Image de fond (réfractée par le verre, très atténuée) */}
+      <Image
+        src="/hero-construction.webp"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="absolute inset-0 object-cover opacity-20 dark:opacity-25"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/85 to-background"
+        aria-hidden
+      />
 
-      {/* Accent orb */}
-      <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/20 blur-3xl" aria-hidden />
-      <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-primary-500/30 blur-3xl" aria-hidden />
+      {/* Bulles d'eau animées */}
+      <LiquidBackground density="rich" />
 
-      <div className="container-base relative py-24 md:py-32 lg:py-40">
+      <div className="container-base relative z-10 py-24 md:py-32 lg:py-40">
         <div className="max-w-3xl">
-          <p className="mb-4 inline-flex items-center rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-accent-300">
+          <p className="glass glass--brand mb-6 inline-flex items-center rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-ink">
             Conakry, République de Guinée · Depuis 2014
           </p>
 
-          <h1 id="hero-heading" className="font-display text-4xl font-extrabold leading-tight text-balance md:text-5xl lg:text-6xl">
+          <h1
+            id="hero-heading"
+            className="font-display text-4xl font-extrabold leading-[1.05] text-balance md:text-5xl lg:text-6xl"
+          >
             Votre partenaire{' '}
-            <span className="text-accent-400">multisectoriel</span>{' '}
+            <span className="text-gradient-brand">multisectoriel</span>{' '}
             de confiance
           </h1>
 
-          <p className="mt-6 text-lg leading-relaxed text-slate-300 md:text-xl max-w-2xl">
-            De la construction à la logistique internationale, 2AC SARL vous accompagne à chaque étape de vos projets avec l'expertise de 10 ans et l'exigence des standards internationaux.
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
+            De la construction à la logistique internationale, 2AC GROUPE vous accompagne à chaque
+            étape de vos projets avec l&apos;expertise de 10 ans et l&apos;exigence des standards internationaux.
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">
-            <Link href="/services" className="btn-accent px-7 py-3.5">
+            <Link href="/services" className="btn-brand px-7 py-3.5">
               Nos services
               <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
-            <Link href="/contact#devis" className="btn-outline-white px-7 py-3.5">
+            <Link href="/contact#devis" className="btn-glass px-7 py-3.5">
               Demander un devis gratuit
             </Link>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center gap-6 border-t border-white/10 pt-10">
-            <div>
-              <p className="text-3xl font-extrabold text-accent-400 font-display">10+</p>
-              <p className="text-xs text-slate-400">Ans d'expérience</p>
-            </div>
-            <div className="h-10 w-px bg-white/10" aria-hidden />
-            <div>
-              <p className="text-3xl font-extrabold text-accent-400 font-display">99%</p>
-              <p className="text-xs text-slate-400">Taux de réussite</p>
-            </div>
-            <div className="h-10 w-px bg-white/10" aria-hidden />
-            <div>
-              <p className="text-3xl font-extrabold text-accent-400 font-display">5</p>
-              <p className="text-xs text-slate-400">Secteurs d'activité</p>
-            </div>
-            <div className="h-10 w-px bg-white/10" aria-hidden />
-            <div>
-              <p className="text-3xl font-extrabold text-accent-400 font-display">150+</p>
-              <p className="text-xs text-slate-400">Projets réalisés</p>
-            </div>
-          </div>
+          {/* Statistiques en verre */}
+          <dl className="card-glass mt-12 grid grid-cols-2 gap-4 p-6 sm:grid-cols-4 sm:gap-2">
+            {STATS.map((stat, i) => (
+              <div key={stat.label} className={i > 0 ? 'sm:border-l sm:border-line sm:pl-4' : ''}>
+                <dd className="font-display text-3xl font-extrabold text-brand">
+                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                </dd>
+                <dt className="mt-1 text-xs text-muted">{stat.label}</dt>
+              </div>
+            ))}
+          </dl>
         </div>
-      </div>
-
-      {/* Bottom wave */}
-      <div className="absolute bottom-0 left-0 right-0" aria-hidden>
-        <svg viewBox="0 0 1440 60" className="h-10 w-full fill-white md:h-16" preserveAspectRatio="none">
-          <path d="M0,60L1440,0L1440,60L0,60Z" />
-        </svg>
       </div>
     </section>
   )

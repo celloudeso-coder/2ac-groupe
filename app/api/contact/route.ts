@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
           from: fromEmail,
           to: contactEmail,
           replyTo: payload.email,
-          subject: `[2AC SARL] Nouveau message — ${payload.subject ?? payload.type}`,
+          subject: `[2AC GROUPE] Nouveau message — ${payload.subject ?? payload.type}`,
           text: [
             `Type : ${payload.type}`,
             `Nom : ${payload.full_name}`,

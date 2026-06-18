@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Manrope } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
-import CookieBanner from '@/components/layout/CookieBanner'
+import { ThemeProvider } from '@/components/theme/ThemeProvider'
 import { SITE_CONFIG } from '@/lib/data'
 
 const inter = Inter({
@@ -33,7 +31,7 @@ export const metadata: Metadata = {
     'carreaux céramique Guinée',
     'logistique internationale Guinée',
     'import export Conakry',
-    '2AC SARL',
+    '2AC GROUPE',
     'Lambanyi',
   ],
   authors: [{ name: SITE_CONFIG.name, url: siteUrl }],
@@ -86,24 +84,25 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#1B3358',
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+    { media: '(prefers-color-scheme: light)', color: '#FFFFFF' },
+  ],
   width: 'device-width',
   initialScale: 1,
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${manrope.variable}`} suppressHydrationWarning>
-      <body>
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-white focus:shadow-lg">
-          Aller au contenu principal
-        </a>
-        <Header />
-        <main id="main-content" tabIndex={-1}>
+    <html
+      lang="fr"
+      className={`dark ${inter.variable} ${manrope.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-screen bg-background text-ink">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
           {children}
-        </main>
-        <Footer />
-        <CookieBanner />
+        </ThemeProvider>
       </body>
     </html>
   )

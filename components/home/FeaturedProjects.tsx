@@ -1,13 +1,14 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { MapPin, ArrowRight, Building2 } from 'lucide-react'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import { getFeaturedProjects } from '@/lib/content'
 
-const PROJECT_GRADIENTS = [
-  'from-primary-800 to-primary-600',
-  'from-slate-800 to-slate-600',
-  'from-primary-700 to-accent-700',
+const PLACEHOLDER_GRADIENTS = [
+  'from-brand-900 via-surface-3 to-black',
+  'from-surface-3 via-surface-2 to-black',
+  'from-brand-800 via-surface-3 to-black',
 ]
 
 export default async function FeaturedProjects() {
@@ -32,30 +33,36 @@ export default async function FeaturedProjects() {
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, i) => (
             <ScrollReveal key={project.slug} delay={i * 100}>
-              <article className="card-base group overflow-hidden">
-                {/* Image placeholder */}
-                <div className={`relative h-48 bg-gradient-to-br ${PROJECT_GRADIENTS[i % PROJECT_GRADIENTS.length]} flex items-center justify-center`}>
-                  <Building2 className="h-16 w-16 text-white/20" aria-hidden />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                  <span className="absolute bottom-3 left-4 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-white">
-                    BTP
-                  </span>
+              <article className="card-glass hover-glow group h-full overflow-hidden">
+                {/* Image de couverture ou dégradé de repli */}
+                <div className="relative h-48 overflow-hidden">
+                  {project.cover_image ? (
+                    <Image
+                      src={project.cover_image}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className={`flex h-full items-center justify-center bg-gradient-to-br ${PLACEHOLDER_GRADIENTS[i % PLACEHOLDER_GRADIENTS.length]}`}>
+                      <Building2 className="h-16 w-16 text-white/15" aria-hidden />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <span className="badge-brand absolute bottom-3 left-4 backdrop-blur">Réalisation</span>
                 </div>
 
                 <div className="p-5">
-                  <h3 className="font-display text-base font-bold text-primary">
-                    {project.title}
-                  </h3>
-                  <div className="mt-1.5 flex items-center gap-1.5 text-xs text-slate-500">
+                  <h3 className="font-display text-base font-bold text-ink">{project.title}</h3>
+                  <div className="mt-1.5 flex items-center gap-1.5 text-xs text-muted">
                     <MapPin className="h-3.5 w-3.5" aria-hidden />
                     {project.location}
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600 line-clamp-3">
-                    {project.description}
-                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted line-clamp-3">{project.description}</p>
                   <Link
                     href="/realisations"
-                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent transition-colors hover:text-accent-600"
+                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand transition-colors hover:text-brand-dark"
                   >
                     Voir le projet
                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />

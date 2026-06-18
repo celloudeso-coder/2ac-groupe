@@ -3,25 +3,26 @@ import { SITE_CONFIG } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Mentions légales',
-  description: 'Mentions légales et conditions générales d\'utilisation du site 2AC SARL.',
+  description: 'Mentions légales et conditions générales d\'utilisation du site 2AC GROUPE.',
   robots: { index: false },
 }
 
 export default function MentionsLegalesPage() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.2ac-gn.com'
   return (
-    <article className="section-padding bg-white" aria-labelledby="legal-heading">
+    <article className="section-padding bg-background" aria-labelledby="legal-heading">
       <div className="container-base max-w-3xl">
-        <h1 id="legal-heading" className="font-display text-3xl font-bold text-primary md:text-4xl">
+        <h1 id="legal-heading" className="font-display text-3xl font-extrabold text-ink md:text-4xl">
           Mentions légales
         </h1>
-        <p className="mt-2 text-sm text-slate-500">Dernière mise à jour : janvier 2025</p>
+        <p className="mt-2 text-sm text-faint">Dernière mise à jour : janvier 2025</p>
 
-        <div className="prose prose-slate prose-headings:font-display prose-headings:text-primary max-w-none mt-8">
+        <div className="prose-2ac mt-8">
           <h2>1. Éditeur du site</h2>
           <p>
             Le présent site web ({siteUrl}) est édité par :<br />
-            <strong>{SITE_CONFIG.name}</strong><br />
+            <strong>{SITE_CONFIG.name}</strong> — nom commercial<br />
+            Raison sociale : {SITE_CONFIG.legalName}<br />
             Forme juridique : Société à Responsabilité Limitée (SARL)<br />
             Siège social : {SITE_CONFIG.address}<br />
             Téléphone : {SITE_CONFIG.phones[0]}<br />
@@ -29,7 +30,7 @@ export default function MentionsLegalesPage() {
           </p>
 
           <h2>2. Directeur de la publication</h2>
-          <p>Le Directeur Général de 2AC SARL est responsable de la publication du présent site.</p>
+          <p>Le Directeur Général de {SITE_CONFIG.legalName} est responsable de la publication du présent site.</p>
 
           <h2>3. Hébergement</h2>
           <p>
@@ -41,15 +42,15 @@ export default function MentionsLegalesPage() {
 
           <h2>4. Propriété intellectuelle</h2>
           <p>
-            L'ensemble du contenu de ce site (textes, images, graphismes, logo, icônes, sons, logiciels…) est la propriété exclusive de 2AC SARL, sauf mentions contraires. Toute reproduction, distribution, modification, adaptation, retransmission ou publication de ces éléments est strictement interdite sans l'accord exprès et écrit de 2AC SARL.
+            L'ensemble du contenu de ce site (textes, images, graphismes, logo, icônes, sons, logiciels…) est la propriété exclusive de {SITE_CONFIG.legalName} ({SITE_CONFIG.name}), sauf mentions contraires. Toute reproduction, distribution, modification, adaptation, retransmission ou publication de ces éléments est strictement interdite sans l'accord exprès et écrit de {SITE_CONFIG.legalName}.
           </p>
 
           <h2>5. Limitation de responsabilité</h2>
           <p>
-            2AC SARL s'efforce de fournir sur ce site des informations aussi précises que possible. Toutefois, elle ne pourra être tenue responsable des omissions, des inexactitudes et des carences dans la mise à jour, qu'elles soient de son fait ou du fait des tiers partenaires.
+            {SITE_CONFIG.legalName} s'efforce de fournir sur ce site des informations aussi précises que possible. Toutefois, elle ne pourra être tenue responsable des omissions, des inexactitudes et des carences dans la mise à jour, qu'elles soient de son fait ou du fait des tiers partenaires.
           </p>
           <p>
-            2AC SARL ne pourra être tenue responsable des dommages directs et indirects causés au matériel de l'utilisateur lors de l'accès au site, et résultant soit de l'utilisation d'un matériel ne répondant pas aux spécifications techniques requises, soit de l'apparition d'un bug ou d'une incompatibilité.
+            {SITE_CONFIG.legalName} ne pourra être tenue responsable des dommages directs et indirects causés au matériel de l'utilisateur lors de l'accès au site, et résultant soit de l'utilisation d'un matériel ne répondant pas aux spécifications techniques requises, soit de l'apparition d'un bug ou d'une incompatibilité.
           </p>
 
           <h2>6. Cookies</h2>

@@ -1,10 +1,13 @@
 import type { Service, Project, Testimonial, BlogPost, TeamMember } from './types'
 
 export const SITE_CONFIG = {
-  name: '2AC SARL',
+  name: '2AC GROUPE',
+  // Raison sociale / forme juridique réelle — à n'utiliser que là où elle a une
+  // valeur légale (mentions légales). La MARQUE affichée partout est « 2AC GROUPE ».
+  legalName: '2AC SARL',
   tagline: 'Une société multisectorielle au service de vos ambitions',
   description:
-    "2AC SARL est une entreprise guinéenne multisectorielle basée à Lambanyi, Conakry. Avec plus de 10 ans d'expérience, nous intervenons en BTP, commerce de matériaux, logistique internationale, import-export et conseil stratégique.",
+    "2AC GROUPE est une entreprise guinéenne multisectorielle basée à Lambanyi, Conakry. Avec plus de 10 ans d'expérience, nous intervenons en BTP, commerce de matériaux, logistique internationale, import-export et conseil stratégique.",
   address: 'Lambanyi, Conakry, République de Guinée',
   phones: ['+224 629 04 57 44'],
   emails: ['contact@2ac-gn.com', 'info@2ac-gn.com'],
@@ -34,7 +37,7 @@ export const SERVICES_DATA: Omit<Service, 'id' | 'created_at' | 'updated_at'>[] 
     short_desc:
       "De la construction neuve à la réhabilitation, nous bâtissons des infrastructures durables qui répondent aux standards les plus exigeants.",
     body: `<h2>Notre expertise en construction</h2>
-<p>Depuis plus de 10 ans, 2AC SARL accompagne particuliers, entreprises et institutions dans la réalisation de leurs projets de construction et de rénovation en Guinée et dans la sous-région.</p>
+<p>Depuis plus de 10 ans, 2AC GROUPE accompagne particuliers, entreprises et institutions dans la réalisation de leurs projets de construction et de rénovation en Guinée et dans la sous-région.</p>
 <p>Notre équipe de professionnels qualifiés assure un suivi rigoureux de chaque chantier, du terrassement à la livraison clés en main, en garantissant qualité d'exécution et respect des délais.</p>
 <h2>Nos domaines d'intervention</h2>
 <p>Qu'il s'agisse d'une villa résidentielle, d'un immeuble commercial, d'un bâtiment institutionnel ou de travaux d'infrastructure publique, nous disposons des compétences techniques et des ressources nécessaires.</p>`,
@@ -64,7 +67,7 @@ export const SERVICES_DATA: Omit<Service, 'id' | 'created_at' | 'updated_at'>[] 
     short_desc:
       'Distributeur de carreaux, céramiques et produits de finition haut de gamme. Un large choix pour sublimer vos espaces.',
     body: `<h2>Votre fournisseur de matériaux de finition</h2>
-<p>2AC SARL propose une gamme complète de carreaux et produits de finition sélectionnés auprès des meilleurs fabricants internationaux. Nous répondons aussi bien aux besoins des particuliers que des professionnels du BTP.</p>
+<p>2AC GROUPE propose une gamme complète de carreaux et produits de finition sélectionnés auprès des meilleurs fabricants internationaux. Nous répondons aussi bien aux besoins des particuliers que des professionnels du BTP.</p>
 <p>Notre showroom à Lambanyi vous accueille pour découvrir nos collections et bénéficier des conseils de nos experts.</p>`,
     icon: 'store',
     engagements: [
@@ -92,7 +95,7 @@ export const SERVICES_DATA: Omit<Service, 'id' | 'created_at' | 'updated_at'>[] 
     short_desc:
       "Expédition express de colis vers l'Europe et les USA en moins d'une semaine. Fiabilité 99 %, traçabilité totale.",
     body: `<h2>Transport express international</h2>
-<p>2AC SARL offre un service d'expédition express vers l'Europe et les États-Unis avec un délai de livraison inférieur à une semaine et un taux de réussite de 99 %. Nous travaillons en partenariat avec Kotedi.com pour assurer la traçabilité complète de vos envois.</p>
+<p>2AC GROUPE offre un service d'expédition express vers l'Europe et les États-Unis avec un délai de livraison inférieur à une semaine et un taux de réussite de 99 %. Nous travaillons en partenariat avec Kotedi.com pour assurer la traçabilité complète de vos envois.</p>
 <p>Nos solutions de transport sont adaptées aux particuliers comme aux entreprises, avec une prise en charge de bout en bout : collecte, emballage, dédouanement et livraison finale.</p>`,
     icon: 'truck',
     engagements: [
@@ -120,7 +123,7 @@ export const SERVICES_DATA: Omit<Service, 'id' | 'created_at' | 'updated_at'>[] 
     short_desc:
       "Commerce international de biens entre l'Afrique, l'Europe et le monde. Gestion douanière et sourcing sur mesure.",
     body: `<h2>Votre partenaire pour le commerce international</h2>
-<p>2AC SARL facilite les échanges commerciaux entre la Guinée, l'Afrique, l'Europe et le reste du monde. Notre réseau de partenaires certifiés et notre expertise des formalités douanières guinéennes et internationales nous permettent de gérer vos opérations d'import-export de A à Z.</p>
+<p>2AC GROUPE facilite les échanges commerciaux entre la Guinée, l'Afrique, l'Europe et le reste du monde. Notre réseau de partenaires certifiés et notre expertise des formalités douanières guinéennes et internationales nous permettent de gérer vos opérations d'import-export de A à Z.</p>
 <p>Que vous ayez besoin de sourcer des matériaux de construction, des produits alimentaires ou des équipements industriels, nous assurons la chaîne logistique complète.</p>`,
     icon: 'globe',
     engagements: [
@@ -148,7 +151,7 @@ export const SERVICES_DATA: Omit<Service, 'id' | 'created_at' | 'updated_at'>[] 
     short_desc:
       'Assistance technique et stratégique, études de faisabilité et optimisation de processus pour concrétiser vos projets.',
     body: `<h2>Un accompagnement expert à chaque étape</h2>
-<p>L'équipe de consultants de 2AC SARL met son expertise multisectorielle à votre disposition pour vous aider à prendre les meilleures décisions, optimiser vos processus et réussir vos projets de développement.</p>
+<p>L'équipe de consultants de 2AC GROUPE met son expertise multisectorielle à votre disposition pour vous aider à prendre les meilleures décisions, optimiser vos processus et réussir vos projets de développement.</p>
 <p>Notre approche est pragmatique et orientée résultats : nous analysons votre situation, identifions les leviers d'amélioration et vous accompagnons dans la mise en œuvre.</p>`,
     icon: 'lightbulb',
     engagements: [
@@ -277,7 +280,7 @@ export const TESTIMONIALS_DATA: Omit<Testimonial, 'id' | 'created_at'>[] = [
     author_name: 'Mamadou Baldé',
     company: 'Directeur, Groupe Balkis Immobilier',
     content:
-      "2AC SARL a construit notre siège social en respectant à la lettre le budget et le calendrier. Leur sérieux et la qualité de leurs finitions sont remarquables. Je les recommande sans hésitation pour tout projet de construction en Guinée.",
+      "2AC GROUPE a construit notre siège social en respectant à la lettre le budget et le calendrier. Leur sérieux et la qualité de leurs finitions sont remarquables. Je les recommande sans hésitation pour tout projet de construction en Guinée.",
     rating: 5,
     avatar_url: null,
     sort_order: 1,
@@ -324,7 +327,7 @@ export const BLOG_POSTS_DATA: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>
 <p>Un carreau rectifié et traité se nettoie plus facilement et vieillit mieux. Prévoyez toujours 5 à 10 % de carreaux supplémentaires pour les coupes et les remplacements futurs.</p>
 <p><strong>Besoin d'un conseil personnalisé ?</strong> Passez à notre showroom de Lambanyi : nous vous aidons à choisir le carreau adapté à chaque pièce et à votre budget.</p>`,
     cover_image: null,
-    author: 'Équipe 2AC SARL',
+    author: 'Équipe 2AC GROUPE',
     categories: ['BTP', 'Commerce'],
     status: 'published',
     published_at: '2024-10-15T08:00:00Z',
@@ -334,7 +337,7 @@ export const BLOG_POSTS_DATA: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>
     title: "Expédition express vers l'Europe : comment ça marche ?",
     excerpt:
       "De la collecte de votre colis à Conakry jusqu'à la livraison en France ou en Belgique en moins de 7 jours : découvrez le processus étape par étape de notre service de transport international.",
-    body: `<p>Envoyer un colis de Conakry vers l'Europe en moins d'une semaine, c'est possible. Voici comment se déroule une expédition avec 2AC SARL, étape par étape.</p>
+    body: `<p>Envoyer un colis de Conakry vers l'Europe en moins d'une semaine, c'est possible. Voici comment se déroule une expédition avec 2AC GROUPE, étape par étape.</p>
 <h2>Étape 1 — La prise en charge</h2>
 <p>Vous déposez votre colis dans nos locaux à Lambanyi, ou nous venons le récupérer. Nous pesons, mesurons et vérifions le contenu avec vous afin d'établir le bon tarif et de respecter la réglementation douanière.</p>
 <h2>Étape 2 — L'emballage sécurisé</h2>
@@ -347,7 +350,7 @@ export const BLOG_POSTS_DATA: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>
 <p>Votre destinataire est livré à domicile en France, en Belgique, au Royaume-Uni ou aux États-Unis, généralement en moins de 7 jours ouvrés, avec un taux de réussite de 99 %.</p>
 <p><strong>Un colis à envoyer ?</strong> Contactez-nous pour obtenir un devis et le délai exact selon la destination.</p>`,
     cover_image: null,
-    author: 'Équipe 2AC SARL',
+    author: 'Équipe 2AC GROUPE',
     categories: ['Logistique'],
     status: 'published',
     published_at: '2024-11-20T08:00:00Z',
@@ -370,7 +373,7 @@ export const BLOG_POSTS_DATA: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>
 <p>Électroménager, téléphonie, produits d'hygiène : une demande de masse, portée par une population jeune et urbaine.</p>
 <p><strong>Vous souhaitez importer ou exporter ?</strong> Notre équipe vous accompagne sur le sourcing, la négociation, le transport et le dédouanement, de bout en bout.</p>`,
     cover_image: null,
-    author: 'Équipe 2AC SARL',
+    author: 'Équipe 2AC GROUPE',
     categories: ['Import-Export', 'Conseil'],
     status: 'published',
     published_at: '2025-01-08T08:00:00Z',
@@ -381,7 +384,7 @@ export const TEAM_DATA: Omit<TeamMember, 'id' | 'created_at'>[] = [
   {
     full_name: 'Directeur Général',
     role: 'Fondateur & Directeur Général',
-    bio: "Fort de plus de 10 ans d'expérience dans le BTP, le commerce international et la logistique, notre fondateur a bâti 2AC SARL sur des valeurs d'excellence, de fiabilité et d'innovation au service du développement guinéen.",
+    bio: "Fort de plus de 10 ans d'expérience dans le BTP, le commerce international et la logistique, notre fondateur a bâti 2AC GROUPE sur des valeurs d'excellence, de fiabilité et d'innovation au service du développement guinéen.",
     photo_url: null,
     is_ceo: true,
     sort_order: 1,

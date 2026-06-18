@@ -3,20 +3,20 @@ import { SITE_CONFIG } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Politique de confidentialité',
-  description: 'Politique de confidentialité et de protection des données personnelles de 2AC SARL.',
+  description: 'Politique de confidentialité et de protection des données personnelles de 2AC GROUPE.',
   robots: { index: false },
 }
 
 export default function PolitiqueConfidentialitePage() {
   return (
-    <article className="section-padding bg-white" aria-labelledby="privacy-heading">
+    <article className="section-padding bg-background" aria-labelledby="privacy-heading">
       <div className="container-base max-w-3xl">
-        <h1 id="privacy-heading" className="font-display text-3xl font-bold text-primary md:text-4xl">
+        <h1 id="privacy-heading" className="font-display text-3xl font-extrabold text-ink md:text-4xl">
           Politique de confidentialité
         </h1>
-        <p className="mt-2 text-sm text-slate-500">Dernière mise à jour : janvier 2025</p>
+        <p className="mt-2 text-sm text-faint">Dernière mise à jour : janvier 2025</p>
 
-        <div className="prose prose-slate prose-headings:font-display prose-headings:text-primary max-w-none mt-8">
+        <div className="prose-2ac mt-8">
           <h2>1. Responsable du traitement</h2>
           <p>
             Le responsable du traitement de vos données personnelles est :<br />

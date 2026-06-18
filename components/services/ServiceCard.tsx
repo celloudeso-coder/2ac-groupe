@@ -22,16 +22,16 @@ export default function ServiceCard({ service, compact = false }: Props) {
     return (
       <Link
         href={`/services/${service.slug}`}
-        className="group card-base flex items-start gap-4 p-5 hover:-translate-y-0.5 transition-transform duration-200"
+        className="group card-glass hover-glow flex items-start gap-4 p-5"
       >
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors group-hover:bg-brand group-hover:text-white">
           <Icon className="h-5 w-5" aria-hidden />
         </div>
         <div className="min-w-0">
-          <h3 className="font-display text-sm font-bold text-primary">{service.title}</h3>
-          <p className="mt-1 text-xs text-slate-500 line-clamp-2">{service.short_desc}</p>
+          <h3 className="font-display text-sm font-bold text-ink">{service.title}</h3>
+          <p className="mt-1 text-xs text-muted line-clamp-2">{service.short_desc}</p>
         </div>
-        <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-accent opacity-0 transition-opacity group-hover:opacity-100" aria-hidden />
+        <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-brand opacity-0 transition-opacity group-hover:opacity-100" aria-hidden />
       </Link>
     )
   }
@@ -39,24 +39,24 @@ export default function ServiceCard({ service, compact = false }: Props) {
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="group card-base flex flex-col p-6 h-full hover:-translate-y-1 transition-transform duration-300"
+      className="group card-glass hover-glow flex h-full flex-col p-6"
     >
-      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors group-hover:bg-brand group-hover:text-white">
         <Icon className="h-6 w-6" aria-hidden />
       </div>
-      <h3 className="font-display text-lg font-bold text-primary">{service.title}</h3>
-      <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">{service.short_desc}</p>
+      <h3 className="font-display text-lg font-bold text-ink">{service.title}</h3>
+      <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{service.short_desc}</p>
       {service.engagements.length > 0 && (
         <ul className="mt-4 space-y-1.5">
           {service.engagements.slice(0, 3).map((e) => (
-            <li key={e} className="flex items-center gap-2 text-xs text-slate-500">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+            <li key={e} className="flex items-center gap-2 text-xs text-muted">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden />
               {e}
             </li>
           ))}
         </ul>
       )}
-      <div className="mt-5 flex items-center gap-1.5 text-sm font-semibold text-accent">
+      <div className="mt-5 flex items-center gap-1.5 text-sm font-semibold text-brand">
         Découvrir
         <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
       </div>

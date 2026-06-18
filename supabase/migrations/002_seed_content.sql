@@ -1,5 +1,5 @@
 -- ============================================================
--- 2AC SARL — Seed de contenu éditorial (projets, blog, témoignages, équipe)
+-- 2AC GROUPE — Seed de contenu éditorial (projets, blog, témoignages, équipe)
 -- À exécuter APRÈS 001_initial.sql. Idempotent : peut être rejoué sans doublon.
 -- N'altère PAS le schéma (source de vérité unique = 001_initial.sql).
 -- ============================================================
@@ -47,11 +47,11 @@ values
 <h2>5. L'entretien et la durabilité</h2>
 <p>Un carreau rectifié et traité se nettoie plus facilement et vieillit mieux. Prévoyez toujours 5 à 10 % de carreaux supplémentaires pour les coupes et les remplacements futurs.</p>
 <p><strong>Besoin d'un conseil personnalisé ?</strong> Passez à notre showroom de Lambanyi.</p>$html$,
-   'Équipe 2AC SARL', '["BTP","Commerce"]', 'published', '2024-10-15T08:00:00Z'),
+   'Équipe 2AC GROUPE', '["BTP","Commerce"]', 'published', '2024-10-15T08:00:00Z'),
   ('expedition-express-europe-comment-ca-marche',
    'Expédition express vers l''Europe : comment ça marche ?',
    'De la collecte de votre colis à Conakry jusqu''à la livraison en France ou en Belgique en moins de 7 jours : découvrez le processus étape par étape de notre service de transport international.',
-   $html$<p>Envoyer un colis de Conakry vers l'Europe en moins d'une semaine, c'est possible. Voici comment se déroule une expédition avec 2AC SARL, étape par étape.</p>
+   $html$<p>Envoyer un colis de Conakry vers l'Europe en moins d'une semaine, c'est possible. Voici comment se déroule une expédition avec 2AC GROUPE, étape par étape.</p>
 <h2>Étape 1 — La prise en charge</h2>
 <p>Vous déposez votre colis dans nos locaux à Lambanyi, ou nous venons le récupérer. Nous pesons, mesurons et vérifions le contenu avec vous.</p>
 <h2>Étape 2 — L'emballage sécurisé</h2>
@@ -63,7 +63,7 @@ values
 <h2>Étape 5 — La livraison</h2>
 <p>Votre destinataire est livré à domicile en Europe ou aux États-Unis, généralement en moins de 7 jours ouvrés, avec un taux de réussite de 99 %.</p>
 <p><strong>Un colis à envoyer ?</strong> Contactez-nous pour un devis et le délai exact.</p>$html$,
-   'Équipe 2AC SARL', '["Logistique"]', 'published', '2024-11-20T08:00:00Z'),
+   'Équipe 2AC GROUPE', '["Logistique"]', 'published', '2024-11-20T08:00:00Z'),
   ('import-export-guinee-opportunites-2025',
    'Import-Export en Guinée : 5 secteurs porteurs en 2025',
    'Matériaux de construction, produits alimentaires, équipements solaires... Quels sont les créneaux les plus prometteurs pour le commerce international guinéen cette année ?',
@@ -79,14 +79,14 @@ values
 <h2>5. Les biens de grande consommation</h2>
 <p>Électroménager, téléphonie, produits d'hygiène : une demande de masse portée par une population jeune.</p>
 <p><strong>Vous souhaitez importer ou exporter ?</strong> Nous vous accompagnons de bout en bout.</p>$html$,
-   'Équipe 2AC SARL', '["Import-Export","Conseil"]', 'published', '2025-01-08T08:00:00Z')
+   'Équipe 2AC GROUPE', '["Import-Export","Conseil"]', 'published', '2025-01-08T08:00:00Z')
 on conflict (slug) do nothing;
 
 -- ----- TÉMOIGNAGES (idempotent : seedé uniquement si la table est vide) -----
 insert into public.testimonials (author_name, company, content, rating, sort_order, status)
 select author_name, company, content, rating, sort_order, status::content_status from (values
   ('Mamadou Baldé','Directeur, Groupe Balkis Immobilier',
-   '2AC SARL a construit notre siège social en respectant à la lettre le budget et le calendrier. Leur sérieux et la qualité de leurs finitions sont remarquables. Je les recommande sans hésitation pour tout projet de construction en Guinée.',
+   '2AC GROUPE a construit notre siège social en respectant à la lettre le budget et le calendrier. Leur sérieux et la qualité de leurs finitions sont remarquables. Je les recommande sans hésitation pour tout projet de construction en Guinée.',
    5, 1, 'published'),
   ('Fatoumata Diallo','Commerçante, Paris (France)',
    'J''utilise le service d''expédition de 2AC depuis 2 ans pour envoyer des colis à ma famille en Guinée. Les délais sont toujours respectés, les colis arrivent en parfait état. Un service digne des grandes compagnies internationales.',
@@ -103,7 +103,7 @@ where not exists (select 1 from public.testimonials);
 insert into public.team_members (full_name, role, bio, is_ceo, sort_order, status)
 select full_name, role, bio, is_ceo, sort_order, status::content_status from (values
   ('À renseigner — Directeur Général','Fondateur & Directeur Général',
-   'Fort de plus de 10 ans d''expérience dans le BTP, le commerce international et la logistique, le fondateur a bâti 2AC SARL sur des valeurs d''excellence, de fiabilité et d''innovation au service du développement guinéen.',
+   'Fort de plus de 10 ans d''expérience dans le BTP, le commerce international et la logistique, le fondateur a bâti 2AC GROUPE sur des valeurs d''excellence, de fiabilité et d''innovation au service du développement guinéen.',
    true, 1, 'draft')
 ) as t(full_name, role, bio, is_ceo, sort_order, status)
 where not exists (select 1 from public.team_members);

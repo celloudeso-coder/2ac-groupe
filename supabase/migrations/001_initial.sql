@@ -1,5 +1,5 @@
 -- ============================================================
--- 2AC SARL — Site vitrine multisectoriel
+-- 2AC GROUPE — Site vitrine multisectoriel
 -- Migration initiale : schéma + RLS + seed
 -- Cible : Supabase (PostgreSQL)
 -- ============================================================
@@ -205,11 +205,11 @@ create policy "submissions admin update"  on public.contact_submissions
   for update using (public.is_admin());
 
 -- ============================================================
--- SEED — données réelles 2AC SARL
+-- SEED — données réelles 2AC GROUPE
 -- ============================================================
 insert into public.site_settings (key, value) values
 ('company', jsonb_build_object(
-  'name','2AC SARL',
+  'name','2AC GROUPE',
   'tagline','Une société multisectorielle au service de vos ambitions',
   'address','Lambanyi, Conakry, République de Guinée',
   'phones', jsonb_build_array('+224 629 04 57 44'),

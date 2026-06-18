@@ -1,5 +1,5 @@
 -- ============================================================
--- 2AC SARL — Correctif RLS : insertion publique des soumissions de contact/devis
+-- 2AC GROUPE — Correctif RLS : insertion publique des soumissions de contact/devis
 -- ============================================================
 -- Symptôme : un visiteur anonyme (clé publishable, rôle `anon`) reçoit
 --   « new row violates row-level security policy for table contact_submissions »

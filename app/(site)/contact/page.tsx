@@ -1,78 +1,74 @@
 import type { Metadata } from 'next'
-import { Phone, Mail, MapPin, Clock } from 'lucide-react'
+import { Phone, Mail, MapPin, Clock, FileText } from 'lucide-react'
 import ContactForm from '@/components/forms/ContactForm'
 import DevisForm from '@/components/forms/DevisForm'
+import PageHero from '@/components/ui/PageHero'
 import { SITE_CONFIG } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Contact & Devis',
   description:
-    'Contactez 2AC SARL pour tout projet BTP, logistique ou import-export. Devis gratuit sous 24h. Bureau à Lambanyi, Conakry.',
+    'Contactez 2AC GROUPE pour tout projet BTP, logistique ou import-export. Devis gratuit sous 24h. Bureau à Lambanyi, Conakry.',
 }
 
 export default function ContactPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="gradient-hero py-20 text-white md:py-24" aria-labelledby="contact-heading">
-        <div className="container-base max-w-2xl">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-accent-300">Nous joindre</p>
-          <h1 id="contact-heading" className="font-display text-4xl font-extrabold md:text-5xl">Contact & Devis</h1>
-          <p className="mt-5 text-lg text-slate-300">
-            Notre équipe vous répond dans les 24 heures ouvrées. Décrivez votre projet et recevez un devis gratuit et personnalisé.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Nous joindre"
+        title="Contact & Devis"
+        description="Notre équipe vous répond dans les 24 heures ouvrées. Décrivez votre projet et recevez un devis gratuit et personnalisé."
+      />
 
       {/* Contact info + form */}
-      <section className="section-padding bg-surface" aria-label="Coordonnées et formulaire de contact">
+      <section className="section-padding bg-background" aria-label="Coordonnées et formulaire de contact">
         <div className="container-base">
           <div className="grid gap-12 lg:grid-cols-3">
             {/* Info */}
             <aside className="space-y-6">
-              <div className="card-base p-6">
-                <h2 className="font-display text-lg font-bold text-primary mb-4">Nos coordonnées</h2>
+              <div className="card-glass p-6">
+                <h2 className="mb-4 font-display text-lg font-bold text-ink">Nos coordonnées</h2>
                 <address className="not-italic space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
                       <MapPin className="h-4 w-4" aria-hidden />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Adresse</p>
-                      <p className="text-sm text-slate-700 mt-0.5">{SITE_CONFIG.address}</p>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-faint">Adresse</p>
+                      <p className="mt-0.5 text-sm text-ink/90">{SITE_CONFIG.address}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
                       <Phone className="h-4 w-4" aria-hidden />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Téléphone</p>
-                      <a href={`tel:${SITE_CONFIG.phones[0].replace(/\s/g, '')}`} className="text-sm text-slate-700 hover:text-primary mt-0.5 block">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-faint">Téléphone</p>
+                      <a href={`tel:${SITE_CONFIG.phones[0].replace(/\s/g, '')}`} className="mt-0.5 block text-sm text-ink/90 hover:text-brand">
                         {SITE_CONFIG.phones[0]}
                       </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
                       <Mail className="h-4 w-4" aria-hidden />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Email</p>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-faint">Email</p>
                       {SITE_CONFIG.emails.map((email) => (
-                        <a key={email} href={`mailto:${email}`} className="text-sm text-slate-700 hover:text-primary mt-0.5 block">
+                        <a key={email} href={`mailto:${email}`} className="mt-0.5 block text-sm text-ink/90 hover:text-brand">
                           {email}
                         </a>
                       ))}
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
                       <Clock className="h-4 w-4" aria-hidden />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Horaires</p>
-                      <div className="mt-0.5 text-sm text-slate-700 space-y-0.5">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-faint">Horaires</p>
+                      <div className="mt-0.5 space-y-0.5 text-sm text-ink/90">
                         <p>Lun – Ven : {SITE_CONFIG.hours.mon_fri}</p>
                         <p>Samedi : {SITE_CONFIG.hours.sat}</p>
                         <p>Dimanche : {SITE_CONFIG.hours.sun}</p>
@@ -83,7 +79,7 @@ export default function ContactPage() {
               </div>
 
               {/* Map */}
-              <div className="card-base overflow-hidden">
+              <div className="card-glass overflow-hidden">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.5!2d-13.62!3d9.57!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sLambanyi%2C+Conakry%2C+Guin%C3%A9e!5e0!3m2!1sfr!2sfr!4v1"
                   width="100%"
@@ -92,35 +88,33 @@ export default function ContactPage() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="Localisation 2AC SARL — Lambanyi, Conakry"
-                  aria-label="Carte Google Maps montrant la localisation de 2AC SARL à Lambanyi, Conakry"
+                  title="Localisation 2AC GROUPE — Lambanyi, Conakry"
+                  aria-label="Carte Google Maps montrant la localisation de 2AC GROUPE à Lambanyi, Conakry"
                 />
               </div>
             </aside>
 
             {/* Forms */}
-            <div className="lg:col-span-2 space-y-12">
+            <div className="space-y-12 lg:col-span-2">
               {/* Contact form */}
-              <section aria-labelledby="contact-form-heading" className="card-base p-6 md:p-8">
-                <h2 id="contact-form-heading" className="font-display text-xl font-bold text-primary mb-6">
+              <section aria-labelledby="contact-form-heading" className="card-glass p-6 md:p-8">
+                <h2 id="contact-form-heading" className="mb-6 font-display text-xl font-bold text-ink">
                   Envoyer un message
                 </h2>
                 <ContactForm />
               </section>
 
               {/* Devis form */}
-              <section id="devis" aria-labelledby="devis-form-heading" className="card-base p-6 md:p-8 border-2 border-accent/20">
+              <section id="devis" aria-labelledby="devis-form-heading" className="card-glass glass--brand p-6 md:p-8">
                 <div className="mb-6 flex items-start gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
-                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden>
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand/15 text-brand">
+                    <FileText className="h-5 w-5" aria-hidden />
                   </div>
                   <div>
-                    <h2 id="devis-form-heading" className="font-display text-xl font-bold text-primary">
+                    <h2 id="devis-form-heading" className="font-display text-xl font-bold text-ink">
                       Demander un devis gratuit
                     </h2>
-                    <p className="text-sm text-slate-500 mt-0.5">Réponse garantie sous 24 heures ouvrées.</p>
+                    <p className="mt-0.5 text-sm text-muted">Réponse garantie sous 24 heures ouvrées.</p>
                   </div>
                 </div>
                 <DevisForm />
