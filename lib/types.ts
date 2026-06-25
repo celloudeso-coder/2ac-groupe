@@ -16,6 +16,14 @@ export interface Service {
   status: ContentStatus
   created_at: string
   updated_at: string
+  // --- Structure de groupe (pôles, migration 005) — tous optionnels ---
+  brand_name?: string | null
+  logo_url?: string | null
+  accent_color?: string | null
+  tagline?: string | null
+  contact_email?: string | null
+  contact_phone?: string | null
+  website_url?: string | null
 }
 
 export interface Project {
@@ -90,6 +98,7 @@ export interface ContactSubmission {
 export interface SiteSettings {
   company: {
     name: string
+    legalName?: string
     tagline: string
     address: string
     phones: string[]
@@ -100,5 +109,13 @@ export interface SiteSettings {
     mon_fri: string
     sat: string
     sun: string
+  }
+  legal?: {
+    legalName: string
+    rccm: string
+    capital: string
+    gerant: string
+    cogerante?: string
+    address: string
   }
 }

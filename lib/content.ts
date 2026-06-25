@@ -93,6 +93,7 @@ const fallbackTeam = TEAM_DATA.map((m, i) => ({
 const fallbackSettings: SiteSettings = {
   company: {
     name: SITE_CONFIG.name,
+    legalName: SITE_CONFIG.legalName,
     tagline: SITE_CONFIG.tagline,
     address: SITE_CONFIG.address,
     phones: [...SITE_CONFIG.phones],
@@ -100,6 +101,7 @@ const fallbackSettings: SiteSettings = {
     years_experience: 10,
   },
   hours: { ...SITE_CONFIG.hours },
+  legal: { ...SITE_CONFIG.legal },
 }
 
 // --- Services --------------------------------------------------------------
@@ -284,7 +286,7 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
     const { data, error } = await supabase
       .from('site_settings')
       .select('key, value')
-      .in('key', ['company', 'hours'])
+      .in('key', ['company', 'hours', 'legal'])
     if (error) throw error
     if (!data || data.length === 0) return fallbackSettings
 
@@ -295,6 +297,7 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
     return {
       company: { ...fallbackSettings.company, ...(map.company as object) },
       hours: { ...fallbackSettings.hours, ...(map.hours as object) },
+      legal: { ...fallbackSettings.legal, ...(map.legal as object) } as SiteSettings['legal'],
     }
   } catch (e) {
     console.error('[content] getSiteSettings → fallback statique :', e)

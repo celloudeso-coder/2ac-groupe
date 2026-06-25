@@ -64,6 +64,7 @@ export const metadata: Metadata = {
       '@context': 'https://schema.org',
       '@type': 'LocalBusiness',
       name: SITE_CONFIG.name,
+      legalName: SITE_CONFIG.legalName,
       description: SITE_CONFIG.description,
       url: siteUrl,
       telephone: SITE_CONFIG.phones[0],

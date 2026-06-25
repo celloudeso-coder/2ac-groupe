@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { CheckCircle, ArrowRight, Building2, Store, Truck, Globe, Lightbulb, Phone } from 'lucide-react'
+import Image from 'next/image'
+import { CheckCircle, ArrowRight, Building2, Store, Truck, Globe, Lightbulb, Sparkles, TrainFront, Phone, Mail } from 'lucide-react'
 import CtaBanner from '@/components/home/CtaBanner'
 import LiquidBackground from '@/components/ui/LiquidBackground'
 import { SITE_CONFIG } from '@/lib/data'
 import { getServiceBySlug, getServices } from '@/lib/content'
+import { accentForText } from '@/lib/color'
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   'building-2': Building2,
@@ -13,6 +15,8 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   truck: Truck,
   globe: Globe,
   lightbulb: Lightbulb,
+  sparkles: Sparkles,
+  'train-front': TrainFront,
 }
 
 interface Props {
@@ -31,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = await getServiceBySlug(slug)
   if (!service) return {}
   return {
-    title: service.title,
+    title: service.brand_name ?? service.title,
     description: service.short_desc ?? undefined,
   }
 }
@@ -45,8 +49,17 @@ export default async function ServicePage({ params }: Props) {
   const allServices = await getServices()
   const otherServices = allServices.filter((s) => s.slug !== slug).slice(0, 3)
 
+  // Couleur d'accent du pôle : brute pour les aplats, variante AA pour le texte.
+  const accent = service.accent_color || '#E53323'
+  const accentText = accentForText(accent)
+  const hasPoleContact = Boolean(service.contact_email || service.contact_phone || service.website_url)
+
   return (
-    <>
+    <div
+      style={
+        { '--pole-accent': accent, '--pole-accent-text': accentText } as React.CSSProperties
+      }
+    >
       {/* Hero */}
       <section className="relative overflow-hidden bg-background py-20 md:py-28" aria-labelledby="service-heading">
         <LiquidBackground density="subtle" className="opacity-70" />
@@ -54,18 +67,40 @@ export default async function ServicePage({ params }: Props) {
           <nav aria-label="Fil d'Ariane" className="mb-6 flex items-center gap-2 text-xs text-muted">
             <Link href="/" className="hover:text-ink">Accueil</Link>
             <span aria-hidden>/</span>
-            <Link href="/services" className="hover:text-ink">Services</Link>
+            <Link href="/services" className="hover:text-ink">Nos pôles</Link>
             <span aria-hidden>/</span>
-            <span className="text-ink">{service.title}</span>
+            <span className="text-ink">{service.brand_name ?? service.title}</span>
           </nav>
           <div className="flex items-start gap-5">
-            <div className="glass flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-brand">
-              <Icon className="h-8 w-8" aria-hidden />
-            </div>
+            {service.logo_url ? (
+              <Image
+                src={service.logo_url}
+                alt={service.brand_name ?? service.title}
+                width={64}
+                height={64}
+                className="h-16 w-16 shrink-0 rounded-2xl object-contain"
+              />
+            ) : (
+              <div
+                className="glass flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl"
+                style={{ color: 'var(--pole-accent-text)' }}
+              >
+                <Icon className="h-8 w-8" aria-hidden />
+              </div>
+            )}
             <div>
+              {service.brand_name && service.brand_name !== service.title && (
+                <p
+                  className="mb-1 text-sm font-semibold uppercase tracking-widest"
+                  style={{ color: 'var(--pole-accent-text)' }}
+                >
+                  {service.brand_name}
+                </p>
+              )}
               <h1 id="service-heading" className="font-display text-3xl font-extrabold text-balance text-ink md:text-4xl lg:text-5xl">
                 {service.title}
               </h1>
+              {service.tagline && <p className="mt-2 text-base font-medium text-ink/80">{service.tagline}</p>}
               <p className="mt-3 text-lg text-muted">{service.short_desc}</p>
             </div>
           </div>
@@ -91,7 +126,11 @@ export default async function ServicePage({ params }: Props) {
                 <ul className="mt-5 grid gap-3 sm:grid-cols-2" role="list">
                   {service.prestations.map((p) => (
                     <li key={p} className="card-glass flex items-start gap-3 p-4">
-                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-brand" aria-hidden />
+                      <CheckCircle
+                        className="mt-0.5 h-5 w-5 shrink-0"
+                        style={{ color: 'var(--pole-accent-text)' }}
+                        aria-hidden
+                      />
                       <span className="text-sm text-ink/90">{p}</span>
                     </li>
                   ))}
@@ -107,12 +146,56 @@ export default async function ServicePage({ params }: Props) {
                 <ul className="mt-4 space-y-3" role="list">
                   {service.engagements.map((e) => (
                     <li key={e} className="flex items-start gap-2.5">
-                      <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-brand" aria-hidden />
+                      <span
+                        className="mt-1.5 h-2 w-2 shrink-0 rounded-full"
+                        style={{ backgroundColor: 'var(--pole-accent-text)' }}
+                        aria-hidden
+                      />
                       <span className="text-sm text-muted">{e}</span>
                     </li>
                   ))}
                 </ul>
               </div>
+
+              {/* Contact propre du pôle (ex. Ferrorail) */}
+              {hasPoleContact && (
+                <div className="card-glass p-6">
+                  <h3 className="font-display text-lg font-bold text-ink">
+                    Contact {service.brand_name ?? 'du pôle'}
+                  </h3>
+                  <ul className="mt-4 space-y-3 text-sm" role="list">
+                    {service.contact_phone && (
+                      <li className="flex items-center gap-2.5">
+                        <Phone className="h-4 w-4 shrink-0" style={{ color: 'var(--pole-accent-text)' }} aria-hidden />
+                        <a href={`tel:${service.contact_phone.replace(/\s/g, '')}`} className="text-muted hover:text-ink">
+                          {service.contact_phone}
+                        </a>
+                      </li>
+                    )}
+                    {service.contact_email && (
+                      <li className="flex items-center gap-2.5">
+                        <Mail className="h-4 w-4 shrink-0" style={{ color: 'var(--pole-accent-text)' }} aria-hidden />
+                        <a href={`mailto:${service.contact_email}`} className="break-all text-muted hover:text-ink">
+                          {service.contact_email}
+                        </a>
+                      </li>
+                    )}
+                    {service.website_url && (
+                      <li className="flex items-center gap-2.5">
+                        <Globe className="h-4 w-4 shrink-0" style={{ color: 'var(--pole-accent-text)' }} aria-hidden />
+                        <a
+                          href={service.website_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="break-all text-muted hover:text-ink"
+                        >
+                          {service.website_url.replace(/^https?:\/\//, '')}
+                        </a>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              )}
 
               {/* CTA */}
               <div className="card-glass glass--brand p-6">
@@ -131,10 +214,10 @@ export default async function ServicePage({ params }: Props) {
                 </a>
               </div>
 
-              {/* Other services */}
+              {/* Autres pôles */}
               {otherServices.length > 0 && (
                 <div className="card-glass p-6">
-                  <h3 className="mb-3 font-display text-sm font-bold text-ink">Nos autres services</h3>
+                  <h3 className="mb-3 font-display text-sm font-bold text-ink">Nos autres pôles</h3>
                   <ul className="space-y-2" role="list">
                     {otherServices.map((s) => {
                       const OtherIcon = ICONS[s.icon ?? ''] ?? Building2
@@ -145,7 +228,7 @@ export default async function ServicePage({ params }: Props) {
                             className="flex items-center gap-2.5 rounded-md px-2 py-2 text-sm text-muted transition-colors hover:bg-ink/5 hover:text-ink"
                           >
                             <OtherIcon className="h-4 w-4 shrink-0 text-brand" aria-hidden />
-                            {s.title}
+                            {s.brand_name ?? s.title}
                           </Link>
                         </li>
                       )
@@ -159,6 +242,6 @@ export default async function ServicePage({ params }: Props) {
       </section>
 
       <CtaBanner />
-    </>
+    </div>
   )
 }

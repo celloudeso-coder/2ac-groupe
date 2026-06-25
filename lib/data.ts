@@ -4,17 +4,26 @@ export const SITE_CONFIG = {
   name: '2AC GROUPE',
   // Raison sociale / forme juridique réelle — à n'utiliser que là où elle a une
   // valeur légale (mentions légales). La MARQUE affichée partout est « 2AC GROUPE ».
-  legalName: '2AC SARL',
-  tagline: 'Une société multisectorielle au service de vos ambitions',
+  legalName: '2AC GROUPE SARL',
+  tagline: 'Un groupe multisectoriel au service de vos ambitions',
   description:
-    "2AC GROUPE est une entreprise guinéenne multisectorielle basée à Lambanyi, Conakry. Avec plus de 10 ans d'expérience, nous intervenons en BTP, commerce de matériaux, logistique internationale, import-export et conseil stratégique.",
-  address: 'Lambanyi, Conakry, République de Guinée',
+    "2AC GROUPE est un groupe guinéen multisectoriel basé à Lambanyi, Conakry. Fort de plus de 10 ans d'expérience, il réunit cinq pôles : BTP & construction, commerce de matériaux (PLANÈTE), transport & logistique (2AC TRANSIT), nettoyage & assainissement (CleanTech) et ingénierie ferroviaire & énergie (Ferrorail).",
+  address: 'Lambanyi (face de la banque VISTA), Commune de Lambanyi, Conakry',
   phones: ['+224 629 04 57 44'],
   emails: ['contact@2ac-gn.com', 'info@2ac-gn.com'],
   hours: {
     mon_fri: '08h00 – 18h00',
     sat: '09h00 – 13h00',
     sun: 'Fermé',
+  },
+  // Informations légales (RCCM, capital, gérance) — page Mentions légales.
+  legal: {
+    legalName: '2AC GROUPE SARL',
+    rccm: 'RCCM/GN.TCC.2026.B.02387 du 16 Février 2026',
+    capital: '30 000 000 GNF',
+    gerant: 'Camara Amadou',
+    cogerante: 'Hadja Djeinabou Dramé',
+    address: 'Lambanyi (face de la banque VISTA), Commune de Lambanyi, Conakry',
   },
   social: {
     linkedin: '#',
@@ -26,7 +35,7 @@ export const SITE_CONFIG = {
 export const STATS = [
   { value: 10, suffix: '+', label: "Ans d'expérience" },
   { value: 99, suffix: '%', label: 'Taux de réussite logistique' },
-  { value: 5, suffix: '', label: "Secteurs d'activité" },
+  { value: 5, suffix: '', label: "Pôles d'activité" },
   { value: 150, suffix: '+', label: 'Projets réalisés' },
 ] as const
 
@@ -34,6 +43,8 @@ export const SERVICES_DATA: Omit<Service, 'id' | 'created_at' | 'updated_at'>[] 
   {
     slug: 'btp',
     title: 'Bâtiment & Travaux Publics',
+    brand_name: '2AC BTP',
+    accent_color: '#E53323',
     short_desc:
       "De la construction neuve à la réhabilitation, nous bâtissons des infrastructures durables qui répondent aux standards les plus exigeants.",
     body: `<h2>Notre expertise en construction</h2>
@@ -64,6 +75,9 @@ export const SERVICES_DATA: Omit<Service, 'id' | 'created_at' | 'updated_at'>[] 
   {
     slug: 'commerce-general',
     title: 'Commerce général',
+    brand_name: 'PLANÈTE Carrelages & Finitions',
+    accent_color: '#1E3A8A',
+    tagline: 'Fourniture de carrelage & produits de finition',
     short_desc:
       'Distributeur de carreaux, céramiques et produits de finition haut de gamme. Un large choix pour sublimer vos espaces.',
     body: `<h2>Votre fournisseur de matériaux de finition</h2>
@@ -90,8 +104,11 @@ export const SERVICES_DATA: Omit<Service, 'id' | 'created_at' | 'updated_at'>[] 
     status: 'published',
   },
   {
-    slug: 'logistique-transport',
-    title: 'Logistique & Transport international',
+    slug: '2ac-transit',
+    title: '2AC TRANSIT',
+    brand_name: '2AC TRANSIT',
+    accent_color: '#E53323',
+    tagline: 'Transport & logistique',
     short_desc:
       "Expédition express de colis vers l'Europe et les USA en moins d'une semaine. Fiabilité 99 %, traçabilité totale.",
     body: `<h2>Transport express international</h2>
@@ -118,58 +135,74 @@ export const SERVICES_DATA: Omit<Service, 'id' | 'created_at' | 'updated_at'>[] 
     status: 'published',
   },
   {
-    slug: 'import-export',
-    title: 'Import-Export',
+    slug: 'cleantech',
+    title: 'Nettoyage & Assainissement',
+    brand_name: '2AC CleanTech',
+    accent_color: '#16803C',
+    tagline: 'Hygiène et propreté professionnelles',
     short_desc:
-      "Commerce international de biens entre l'Afrique, l'Europe et le monde. Gestion douanière et sourcing sur mesure.",
-    body: `<h2>Votre partenaire pour le commerce international</h2>
-<p>2AC GROUPE facilite les échanges commerciaux entre la Guinée, l'Afrique, l'Europe et le reste du monde. Notre réseau de partenaires certifiés et notre expertise des formalités douanières guinéennes et internationales nous permettent de gérer vos opérations d'import-export de A à Z.</p>
-<p>Que vous ayez besoin de sourcer des matériaux de construction, des produits alimentaires ou des équipements industriels, nous assurons la chaîne logistique complète.</p>`,
-    icon: 'globe',
+      'Nettoyage, assainissement et hygiène des bâtiments et espaces.',
+    body: `<h2>Propreté et assainissement professionnels</h2>
+<p>2AC CleanTech assure le nettoyage, l'assainissement et l'hygiène des bâtiments, bureaux et espaces, avec un personnel formé et des produits conformes. Nos équipes interviennent rapidement, pour des prestations ponctuelles comme pour des contrats d'entretien régulier.</p>
+<h2>En complément du BTP</h2>
+<p>CleanTech prolonge naturellement notre pôle Construction : le <strong>nettoyage après chantier</strong> permet de livrer des locaux propres et prêts à l'usage. Du gros œuvre à la remise des clés, le groupe couvre l'ensemble de la chaîne.</p>`,
+    icon: 'sparkles',
     engagements: [
-      "Réseau de partenaires certifiés à l'international",
-      'Gestion complète des formalités douanières',
-      'Solutions sur mesure pour chaque besoin',
-      'Suivi en temps réel des expéditions',
-      'Prix compétitifs grâce à des volumes consolidés',
+      'Hygiène et salubrité garanties',
+      'Personnel formé et équipé',
+      'Produits adaptés et conformes',
+      'Intervention rapide',
     ],
     prestations: [
-      'Matériaux BTP et équipements de construction',
-      'Produits agroalimentaires et denrées',
-      'Équipements industriels et machineries',
-      'Biens de grande consommation',
-      'Sourcing et négociation fournisseurs',
-      'Assistance douanière et logistique',
+      'Nettoyage industriel et technique',
+      'Entretien de bureaux et bâtiments administratifs',
+      'Désinfection et assainissement',
+      'Nettoyage après chantier',
+      'Entretien des espaces verts',
+      'Nettoyage de vitres et façades',
+      'Gestion et évacuation des déchets',
+      'Dératisation et désinsectisation',
+      'Maintenance et hygiène des locaux',
+      'Fourniture de produits et matériels de nettoyage',
     ],
     cover_image: null,
-    sort_order: 4,
+    sort_order: 6,
     status: 'published',
   },
   {
-    slug: 'conseil',
-    title: 'Conseil & Services',
+    slug: 'ferrorail',
+    title: 'Ingénierie & Infrastructures ferroviaires',
+    brand_name: 'Ferrorail Service Guinée (FRS)',
+    accent_color: '#1B3A6B',
+    tagline: 'Votre partenaire technique pour des infrastructures modernes, fiables et durables.',
+    contact_email: 'Contact@ferrorailservice-gn.com',
+    contact_phone: '+224 612 555 572',
+    website_url: 'https://www.ferrorail-service.com',
     short_desc:
-      'Assistance technique et stratégique, études de faisabilité et optimisation de processus pour concrétiser vos projets.',
-    body: `<h2>Un accompagnement expert à chaque étape</h2>
-<p>L'équipe de consultants de 2AC GROUPE met son expertise multisectorielle à votre disposition pour vous aider à prendre les meilleures décisions, optimiser vos processus et réussir vos projets de développement.</p>
-<p>Notre approche est pragmatique et orientée résultats : nous analysons votre situation, identifions les leviers d'amélioration et vous accompagnons dans la mise en œuvre.</p>`,
-    icon: 'lightbulb',
+      'Ingénierie, infrastructures ferroviaires et solutions énergétiques.',
+    body: `<h2>Ferroviaire</h2>
+<p>Création et modernisation de passages à niveau, signalisation ferroviaire, équipements ferroviaires, sécurité de chantier et maintenance des infrastructures.</p>
+<h2>Énergie</h2>
+<p>Installations électriques industrielles et tertiaires, distribution d'énergie, énergies renouvelables (photovoltaïque) et optimisation énergétique.</p>
+<h2>Compétences & équipements</h2>
+<p>Formations (sécurité ferroviaire, organisation de chantiers, métiers techniques, prévention des risques) et fourniture de matériel ferroviaire spécialisé, BTP et électrique.</p>`,
+    icon: 'train-front',
     engagements: [
-      'Accompagnement expert et personnalisé',
-      'Approche pragmatique orientée résultats',
-      'Confidentialité absolue',
-      'Suivi post-mission',
+      'Sécurité — respect des normes et procédures',
+      'Fiabilité — solutions solides et durables',
+      'Expertise — savoir-faire technique',
+      'Réactivité — réponse efficace au terrain',
     ],
     prestations: [
-      'Assistance technique et stratégique',
-      'Études de faisabilité et business plans',
-      'Optimisation des processus opérationnels',
-      'Conseil en approvisionnement et sourcing',
-      "Accompagnement à l'installation d'entreprise",
-      'Formations et transfert de compétences',
+      'Expertise ferroviaire',
+      'Compétence énergétique',
+      'Approche terrain',
+      'Sécurité',
+      'Accompagnement',
+      'Performance',
     ],
     cover_image: null,
-    sort_order: 5,
+    sort_order: 7,
     status: 'published',
   },
 ]

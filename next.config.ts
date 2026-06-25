@@ -18,12 +18,19 @@ const LEGACY_REDIRECTS: { source: string; destination: string; permanent: boolea
   { source: '/about', destination: '/a-propos', permanent: true },
   { source: '/service', destination: '/services', permanent: true },
 
-  // Pages de domaines/services (slugs réels de l'ancien site)
+  // Pages de domaines/services (slugs réels de l'ancien site) → pôles actuels.
+  // Redirections DIRECTES vers la cible finale (pas de chaîne).
   { source: '/domaines/batiment-travaux-publics', destination: '/services/btp', permanent: true },
-  { source: '/domaines/import-export', destination: '/services/import-export', permanent: true },
-  { source: '/domaines/logistique-transport', destination: '/services/logistique-transport', permanent: true },
   { source: '/domaines/commerce-general', destination: '/services/commerce-general', permanent: true },
   // NB : /domaines/conseil n'existait pas sur l'ancien site (pas de page dédiée).
+
+  // Rebrand & retraits (structure de groupe — migration 005) :
+  //  logistique-transport → 2AC TRANSIT ; import-export & conseil retirés.
+  { source: '/services/logistique-transport', destination: '/services/2ac-transit', permanent: true },
+  { source: '/domaines/logistique-transport', destination: '/services/2ac-transit', permanent: true },
+  { source: '/services/import-export', destination: '/services/2ac-transit', permanent: true },
+  { source: '/domaines/import-export', destination: '/services/2ac-transit', permanent: true },
+  { source: '/services/conseil', destination: '/services', permanent: true },
 
   // Blog : ancien contenu = Lorem Ipsum → redirection globale (aucun article réel)
   { source: '/blog-detail/:id', destination: '/blog', permanent: true },

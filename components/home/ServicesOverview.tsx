@@ -1,9 +1,10 @@
 import Link from 'next/link'
-import { Building2, Store, Truck, Globe, Lightbulb, ArrowRight } from 'lucide-react'
+import { Building2, Store, Truck, Globe, Lightbulb, Sparkles, TrainFront, ArrowRight } from 'lucide-react'
 import SectionHeader from '@/components/ui/SectionHeader'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 import LiquidBackground from '@/components/ui/LiquidBackground'
 import { getServices } from '@/lib/content'
+import { accentForText } from '@/lib/color'
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   'building-2': Building2,
@@ -11,6 +12,8 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   truck: Truck,
   globe: Globe,
   lightbulb: Lightbulb,
+  sparkles: Sparkles,
+  'train-front': TrainFront,
 }
 
 export default async function ServicesOverview() {
@@ -21,25 +24,34 @@ export default async function ServicesOverview() {
       <div className="container-base relative z-10">
         <SectionHeader
           id="services-heading"
-          eyebrow="Nos domaines"
-          title="5 secteurs, une seule adresse"
-          description="De la construction neuve à la logistique internationale, nous couvrons l'ensemble de vos besoins avec la même rigueur et le même professionnalisme."
+          eyebrow="Nos pôles"
+          title="Cinq pôles, un seul partenaire"
+          description="Du BTP à la logistique, du commerce de matériaux à l'ingénierie ferroviaire, le groupe couvre l'ensemble de vos besoins avec la même rigueur et le même professionnalisme."
         />
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, i) => {
             const Icon = ICONS[service.icon ?? ''] ?? Building2
+            const accentText = accentForText(service.accent_color || '#E53323')
             return (
               <ScrollReveal key={service.slug} delay={i * 80}>
                 <Link
                   href={`/services/${service.slug}`}
                   className="group card-glass hover-glow flex h-full flex-col p-6"
-                  aria-label={`En savoir plus sur ${service.title}`}
+                  aria-label={`En savoir plus sur ${service.brand_name ?? service.title}`}
                 >
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand/10 text-brand transition-colors duration-200 group-hover:bg-brand group-hover:text-white">
+                  <div
+                    className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ink/5"
+                    style={{ color: accentText }}
+                  >
                     <Icon className="h-6 w-6" aria-hidden />
                   </div>
-                  <h3 className="font-display text-lg font-bold text-ink">{service.title}</h3>
+                  {service.brand_name && service.brand_name !== service.title && (
+                    <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: accentText }}>
+                      {service.brand_name}
+                    </p>
+                  )}
+                  <h3 className="mt-0.5 font-display text-lg font-bold text-ink">{service.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{service.short_desc}</p>
                   <div className="mt-5 flex items-center gap-1.5 text-sm font-semibold text-brand">
                     Découvrir

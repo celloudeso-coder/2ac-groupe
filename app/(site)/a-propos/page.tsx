@@ -116,6 +116,48 @@ export default async function AboutPage() {
         </div>
       </section>
 
+      {/* Ancrage international */}
+      <section className="section-padding bg-surface" aria-labelledby="intl-heading">
+        <div className="container-base">
+          <div className="grid gap-10 md:grid-cols-2 md:items-center">
+            <div>
+              <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-brand">Notre ancrage</p>
+              <h2 id="intl-heading" className="font-display text-2xl font-bold text-ink md:text-3xl text-balance">
+                Conakry au cœur, l&apos;international en relais
+              </h2>
+              <p className="mt-4 leading-relaxed text-muted">
+                Le siège du groupe est établi à <strong className="text-ink">Lambanyi, Conakry</strong>,
+                d&apos;où sont pilotés l&apos;ensemble de nos pôles. Notre présence en France nous sert de
+                <strong className="text-ink"> relais et point de contact en Europe</strong> pour la
+                logistique, le sourcing et les échanges import-export.
+              </p>
+              <p className="mt-4 leading-relaxed text-muted">
+                Cet ancrage local fort, doublé d&apos;un relais européen, nous permet d&apos;accompagner
+                aussi bien les particuliers et entreprises guinéens que la diaspora.
+              </p>
+            </div>
+            <ul className="grid gap-4 sm:grid-cols-2" role="list">
+              <li className="card-glass p-5">
+                <p className="font-display text-lg font-bold text-ink">Conakry, Guinée</p>
+                <p className="mt-1 text-sm text-muted">Siège du groupe — pilotage des 5 pôles.</p>
+              </li>
+              <li className="card-glass p-5">
+                <p className="font-display text-lg font-bold text-ink">France</p>
+                <p className="mt-1 text-sm text-muted">Relais / point de contact Europe (logistique & sourcing).</p>
+              </li>
+              <li className="card-glass p-5">
+                <p className="font-display text-lg font-bold text-ink">Europe & USA</p>
+                <p className="mt-1 text-sm text-muted">Zones desservies par notre pôle TRANSIT.</p>
+              </li>
+              <li className="card-glass p-5">
+                <p className="font-display text-lg font-bold text-ink">Réseau partenaires</p>
+                <p className="mt-1 text-sm text-muted">Fournisseurs certifiés à l&apos;international.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* CEO message */}
       <section className="relative overflow-hidden section-padding bg-background" aria-labelledby="ceo-heading">
         <LiquidBackground density="rich" />

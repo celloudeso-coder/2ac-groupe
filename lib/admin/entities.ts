@@ -66,8 +66,10 @@ const STATUS_OPTIONS = [
 
 const ICON_OPTIONS = [
   { value: 'building-2', label: 'Bâtiment (BTP)' },
-  { value: 'store', label: 'Magasin (Commerce)' },
-  { value: 'truck', label: 'Camion (Logistique)' },
+  { value: 'store', label: 'Magasin (Commerce / PLANÈTE)' },
+  { value: 'truck', label: 'Camion (2AC TRANSIT)' },
+  { value: 'sparkles', label: 'Étincelles (CleanTech)' },
+  { value: 'train-front', label: 'Train (Ferrorail)' },
   { value: 'globe', label: 'Globe (Import-Export)' },
   { value: 'lightbulb', label: 'Ampoule (Conseil)' },
 ]
@@ -89,7 +91,14 @@ export const ENTITIES: Record<string, EntityConfig> = {
     fields: [
       { name: 'title', label: 'Titre', type: 'text', required: true, colSpan: 2 },
       { name: 'slug', label: 'Slug (URL)', type: 'slug', required: true, slugFrom: 'title', help: 'Identifiant dans l’URL, ex : btp' },
+      { name: 'brand_name', label: 'Nom de marque du pôle', type: 'text', help: 'ex : PLANÈTE Carrelages & Finitions. Vide = nom 2AC.' },
+      { name: 'tagline', label: 'Slogan du pôle', type: 'text' },
       { name: 'icon', label: 'Icône', type: 'select', options: ICON_OPTIONS },
+      { name: 'accent_color', label: 'Couleur d’accent (hex)', type: 'text', placeholder: '#1E3A8A', help: 'Couleur de marque du pôle. Vide = rouge 2AC (#E53323).' },
+      { name: 'logo_url', label: 'Logo du pôle', type: 'image', bucket: 'brand' },
+      { name: 'contact_email', label: 'Email propre au pôle (optionnel)', type: 'text', help: 'Affiche un bloc « Contact du pôle ».' },
+      { name: 'contact_phone', label: 'Téléphone propre au pôle (optionnel)', type: 'text' },
+      { name: 'website_url', label: 'Site web du pôle (optionnel)', type: 'text', placeholder: 'https://…' },
       { name: 'short_desc', label: 'Description courte', type: 'textarea', colSpan: 2, help: 'Résumé affiché sur les cartes.' },
       { name: 'body', label: 'Contenu détaillé', type: 'richtext', colSpan: 2 },
       { name: 'prestations', label: 'Prestations', type: 'tags', colSpan: 2, help: 'Une prestation par ligne.' },

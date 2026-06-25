@@ -6,9 +6,9 @@ import CtaBanner from '@/components/home/CtaBanner'
 import { getServices } from '@/lib/content'
 
 export const metadata: Metadata = {
-  title: 'Nos Services',
+  title: 'Nos pôles',
   description:
-    'Découvrez les 5 domaines d\'activité de 2AC GROUPE : BTP, commerce de matériaux, logistique internationale, import-export et conseil stratégique à Conakry.',
+    "Découvrez les 5 pôles de 2AC GROUPE : BTP & construction, commerce de matériaux (PLANÈTE), transport & logistique (2AC TRANSIT), nettoyage & assainissement (CleanTech) et ingénierie ferroviaire & énergie (Ferrorail) à Conakry.",
 }
 
 export const revalidate = 60
@@ -18,15 +18,15 @@ export default async function ServicesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Nos domaines"
-        title="5 secteurs, une seule adresse"
-        description="De la construction à la logistique internationale, 2AC GROUPE vous offre un accompagnement complet avec la même exigence et le même professionnalisme."
+        eyebrow="Nos pôles"
+        title="Cinq pôles, un seul partenaire"
+        description="Du BTP à l'ingénierie ferroviaire, en passant par le commerce de matériaux, le transport et le nettoyage, le groupe vous offre un accompagnement complet avec la même exigence."
       />
 
       {/* Services grid */}
-      <section className="section-padding bg-surface" aria-label="Liste des services">
+      <section className="section-padding bg-surface" aria-label="Liste des pôles">
         <div className="container-base">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => (
               <ServiceCard key={service.slug} service={service} />
             ))}
