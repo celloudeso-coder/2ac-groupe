@@ -81,7 +81,7 @@ export default function ContactPage() {
               {/* Map */}
               <div className="card-glass overflow-hidden">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.5!2d-13.62!3d9.57!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sLambanyi%2C+Conakry%2C+Guin%C3%A9e!5e0!3m2!1sfr!2sfr!4v1"
+                  src="https://maps.google.com/maps?q=9.640300,-13.613934&z=16&hl=fr&output=embed"
                   width="100%"
                   height="220"
                   style={{ border: 0 }}
@@ -91,6 +91,14 @@ export default function ContactPage() {
                   title="Localisation 2AC GROUPE — Lambanyi, Conakry"
                   aria-label="Carte Google Maps montrant la localisation de 2AC GROUPE à Lambanyi, Conakry"
                 />
+                <a
+                  href="https://maps.google.com/?q=9.640300,-13.613934"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block border-t border-line px-4 py-2.5 text-center text-xs font-medium text-muted transition-colors hover:text-brand"
+                >
+                  Ouvrir dans Google Maps
+                </a>
               </div>
             </aside>
 
