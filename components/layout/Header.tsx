@@ -101,7 +101,7 @@ export default function Header() {
                   </button>
                   {servicesOpen && (
                     <ul
-                      className="glass glass-edge absolute left-0 top-full mt-2 w-72 overflow-hidden rounded-2xl py-2"
+                      className="absolute left-0 top-full mt-2 w-72 overflow-hidden rounded-2xl border border-line bg-surface-2 py-2 shadow-glass"
                       role="menu"
                     >
                       <li role="none">
@@ -181,7 +181,7 @@ export default function Header() {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div id="mobile-menu" className="border-t border-line py-4 lg:hidden">
+          <div id="mobile-menu" className="border-t border-line bg-background py-4 lg:hidden">
             <ul className="space-y-1" role="list">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
