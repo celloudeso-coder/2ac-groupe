@@ -16,11 +16,11 @@ const NAV_LINKS = [
     label: 'Nos pôles',
     href: '/services',
     children: [
-      { label: 'BTP & Construction', href: '/services/btp' },
-      { label: 'PLANÈTE — Carrelages & Finitions', href: '/services/commerce-general' },
-      { label: '2AC TRANSIT — Transport & Logistique', href: '/services/2ac-transit' },
-      { label: '2AC CleanTech — Nettoyage', href: '/services/cleantech' },
-      { label: 'Ferrorail (FRS) — Ferroviaire & Énergie', href: '/services/ferrorail' },
+      { label: 'BTP & Construction', sublabel: 'Bâtiment & travaux publics', href: '/services/btp' },
+      { label: 'PLANÈTE', sublabel: 'Carrelages & finitions', href: '/services/commerce-general' },
+      { label: '2AC TRANSIT', sublabel: 'Transport & logistique', href: '/services/2ac-transit' },
+      { label: '2AC CleanTech', sublabel: 'Nettoyage & assainissement', href: '/services/cleantech' },
+      { label: 'Ferrorail (FRS)', sublabel: 'Ferroviaire & énergie', href: '/services/ferrorail' },
     ],
   },
   { label: 'Réalisations', href: '/realisations' },
@@ -101,16 +101,16 @@ export default function Header() {
                   </button>
                   {servicesOpen && (
                     <ul
-                      className="glass glass-edge absolute left-0 top-full mt-2 w-60 overflow-hidden rounded-2xl py-2"
+                      className="glass glass-edge absolute left-0 top-full mt-2 w-72 overflow-hidden rounded-2xl py-2"
                       role="menu"
                     >
                       <li role="none">
                         <Link
                           href="/services"
-                          className="flex px-4 py-2 text-sm font-semibold text-brand hover:bg-ink/5"
+                          className="block px-4 py-2 text-sm font-semibold text-brand hover:bg-ink/5"
                           role="menuitem"
                         >
-                          Tous nos services
+                          Tous nos pôles
                         </Link>
                       </li>
                       <li role="none" className="my-1 border-t border-line" />
@@ -119,12 +119,22 @@ export default function Header() {
                           <Link
                             href={child.href}
                             className={cn(
-                              'flex px-4 py-2 text-sm transition-colors hover:bg-ink/5 hover:text-brand',
-                              pathname === child.href ? 'text-brand font-medium' : 'text-muted'
+                              'block px-4 py-2.5 leading-snug transition-colors hover:bg-ink/5',
+                              pathname === child.href && 'bg-ink/5'
                             )}
                             role="menuitem"
                           >
-                            {child.label}
+                            <span
+                              className={cn(
+                                'block text-sm font-semibold',
+                                pathname === child.href ? 'text-brand' : 'text-ink'
+                              )}
+                            >
+                              {child.label}
+                            </span>
+                            {child.sublabel && (
+                              <span className="mt-0.5 block text-xs text-faint">{child.sublabel}</span>
+                            )}
                           </Link>
                         </li>
                       ))}
@@ -194,11 +204,21 @@ export default function Header() {
                           <Link
                             href={child.href}
                             className={cn(
-                              'block rounded-md px-3 py-2 text-sm transition-colors',
-                              pathname === child.href ? 'text-brand font-medium' : 'text-muted hover:text-brand'
+                              'block rounded-md px-3 py-2 leading-snug transition-colors',
+                              pathname === child.href ? 'bg-ink/5' : 'hover:bg-ink/5'
                             )}
                           >
-                            {child.label}
+                            <span
+                              className={cn(
+                                'block text-sm font-medium',
+                                pathname === child.href ? 'text-brand' : 'text-ink'
+                              )}
+                            >
+                              {child.label}
+                            </span>
+                            {child.sublabel && (
+                              <span className="block text-xs text-faint">{child.sublabel}</span>
+                            )}
                           </Link>
                         </li>
                       ))}
