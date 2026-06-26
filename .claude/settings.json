@@ -6,7 +6,12 @@
       "Bash(git restore *)",
       "Bash(curl -s --max-time 15 'https://jdijyzahzepriwxznbvz.supabase.co/rest/v1/services?slug=eq.commerce-general&select=slug,logo_url,cover_image' -H 'apikey: sb_publishable_DlXKj5ZZU_1PGs1PXM8AOA_XPCMEdRv' -H 'Authorization: Bearer sb_publishable_DlXKj5ZZU_1PGs1PXM8AOA_XPCMEdRv')",
       "Bash(google-chrome --headless=new --no-sandbox --remote-debugging-port=9225 --window-size=1280,800 --force-device-scale-factor=1 \"http://localhost:3000/services/commerce-general\")",
-      "Bash(google-chrome --headless=new --no-sandbox --remote-debugging-port=9226 --window-size=1280,900 --force-device-scale-factor=1 \"http://localhost:3000/a-propos\")"
+      "Bash(google-chrome --headless=new --no-sandbox --remote-debugging-port=9226 --window-size=1280,900 --force-device-scale-factor=1 \"http://localhost:3000/a-propos\")",
+      "Bash(cd /home/clvx/Documents/LYNXADocuments/2ac-groupe *)",
+      "Bash(python3 -c \"import sys,json; v=json.load\\(sys.stdin\\); c=v[0]['value'] if v else {}; print\\('emails:', c.get\\('emails'\\), '| phones:', c.get\\('phones'\\), '| name:', c.get\\('name'\\)\\)\")"
+    ],
+    "additionalDirectories": [
+      "/home/clvx/Documents/LYNXADocuments/2ac-groupe/app/(site)/services/[slug]"
     ]
   }
 }
