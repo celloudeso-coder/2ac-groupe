@@ -4,22 +4,22 @@ import type { Partner } from '@/lib/types'
 
 function PartnerChip({ partner, dup = false }: { partner: Partner; dup?: boolean }) {
   const inner = (
-    <span className="glass flex h-16 items-center justify-center rounded-2xl px-6">
+    <span className="flex h-20 min-w-[9rem] items-center justify-center rounded-2xl bg-white px-6 shadow-glass ring-1 ring-black/5 transition-transform duration-200 hover:scale-[1.03]">
       {partner.logo_url ? (
         <Image
           src={partner.logo_url}
           alt={dup ? '' : partner.name}
-          width={180}
-          height={48}
-          className="h-10 w-auto object-contain opacity-80 transition-opacity duration-200 hover:opacity-100"
+          width={200}
+          height={56}
+          className="h-12 w-auto max-w-[180px] object-contain"
         />
       ) : (
-        <span className="whitespace-nowrap text-sm font-semibold text-ink">{partner.name}</span>
+        <span className="whitespace-nowrap text-sm font-semibold text-neutral-900">{partner.name}</span>
       )}
     </span>
   )
   return (
-    <li className="shrink-0" aria-hidden={dup || undefined}>
+    <li className="shrink-0" {...(dup ? { 'aria-hidden': true } : {})}>
       {partner.website_url ? (
         <a
           href={partner.website_url}
