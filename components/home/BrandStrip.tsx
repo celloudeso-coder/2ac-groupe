@@ -1,12 +1,12 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { getServices } from '@/lib/content'
 import { accentForText } from '@/lib/color'
 
 /**
  * Bande « Nos marques » : présente les marques des pôles du groupe
- * (PLANÈTE, 2AC TRANSIT, CleanTech, FRS…). Affiche le logo du pôle quand
- * `logo_url` est fourni, sinon le `brand_name` en chip teintée de l'accent.
+ * (PLANÈTE, 2AC TRANSIT, CleanTech, FRS…). Affichage uniforme par le NOM de la
+ * marque (avec une pastille à la couleur d'accent), sans logo — pour un rendu
+ * cohérent quelle que soit la marque.
  */
 export default async function BrandStrip() {
   const services = await getServices()
@@ -29,20 +29,8 @@ export default async function BrandStrip() {
                   className="glass inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-brand/40"
                   title={s.brand_name ?? undefined}
                 >
-                  {s.logo_url ? (
-                    <Image
-                      src={s.logo_url}
-                      alt={s.brand_name ?? s.title}
-                      width={96}
-                      height={28}
-                      className="h-7 w-auto object-contain"
-                    />
-                  ) : (
-                    <>
-                      <span className="h-2 w-2 rounded-full" style={{ backgroundColor: accentText }} aria-hidden />
-                      {s.brand_name}
-                    </>
-                  )}
+                  <span className="h-2 w-2 rounded-full" style={{ backgroundColor: accentText }} aria-hidden />
+                  {s.brand_name}
                 </Link>
               </li>
             )
