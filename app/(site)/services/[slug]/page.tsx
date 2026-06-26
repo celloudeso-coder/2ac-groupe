@@ -120,7 +120,11 @@ export default async function ServicePage({ params }: Props) {
                 }}
                 aria-hidden
               />
-              <div className="card-glass glass-edge relative flex aspect-[4/3] w-full max-w-md items-center justify-center p-10">
+              <div
+                className={`card-glass glass-edge relative flex aspect-[4/3] w-full max-w-md items-center justify-center overflow-hidden ${
+                  service.logo_url || !service.cover_image ? 'p-10' : ''
+                }`}
+              >
                 {service.logo_url ? (
                   <Image
                     src={service.logo_url}
@@ -128,6 +132,14 @@ export default async function ServicePage({ params }: Props) {
                     width={420}
                     height={280}
                     className="max-h-44 w-auto object-contain"
+                  />
+                ) : service.cover_image ? (
+                  <Image
+                    src={service.cover_image}
+                    alt={service.brand_name ?? service.title}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 33vw"
+                    className="object-cover"
                   />
                 ) : (
                   <span style={{ color: 'var(--pole-accent-text)' }} aria-hidden>
