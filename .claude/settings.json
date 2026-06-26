@@ -3,7 +3,8 @@
     "allow": [
       "Bash(rm -rf /tmp/2ac-verify)",
       "Bash(mkdir -p /tmp/2ac-verify)",
-      "Bash(git restore *)"
+      "Bash(git restore *)",
+      "Bash(curl -s --max-time 15 'https://jdijyzahzepriwxznbvz.supabase.co/rest/v1/services?slug=eq.commerce-general&select=slug,logo_url,cover_image' -H 'apikey: sb_publishable_DlXKj5ZZU_1PGs1PXM8AOA_XPCMEdRv' -H 'Authorization: Bearer sb_publishable_DlXKj5ZZU_1PGs1PXM8AOA_XPCMEdRv')"
     ]
   }
 }
