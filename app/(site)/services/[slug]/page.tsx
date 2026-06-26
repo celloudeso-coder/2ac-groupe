@@ -109,7 +109,7 @@ export default async function ServicePage({ params }: Props) {
             </div>
 
             {/* Panneau visuel (droite) — desktop uniquement */}
-            <div className="relative hidden lg:flex lg:justify-center">
+            <div className="relative hidden lg:flex lg:items-center lg:justify-center">
               {/* Halo d'accent discret (statique, sans animation) */}
               <div
                 className="pointer-events-none absolute inset-0 -z-0 blur-3xl"
@@ -120,16 +120,19 @@ export default async function ServicePage({ params }: Props) {
                 }}
                 aria-hidden
               />
-              <div className="card-glass glass-edge relative flex aspect-[4/3] w-full max-w-md items-center justify-center overflow-hidden p-10">
-                {service.logo_url ? (
+              {service.logo_url ? (
+                // Cartouche blanc qui s'adapte à la taille du logo (avec un plafond).
+                <div className="relative rounded-3xl bg-white p-8 shadow-glass ring-1 ring-black/5">
                   <Image
                     src={service.logo_url}
                     alt={service.brand_name ?? service.title}
-                    width={420}
-                    height={280}
-                    className="max-h-44 w-auto object-contain"
+                    width={360}
+                    height={260}
+                    className="h-auto max-h-48 w-auto max-w-[300px] object-contain"
                   />
-                ) : service.cover_image ? (
+                </div>
+              ) : service.cover_image ? (
+                <div className="card-glass glass-edge relative aspect-[4/3] w-full max-w-md overflow-hidden">
                   <Image
                     src={service.cover_image}
                     alt={service.brand_name ?? service.title}
@@ -137,12 +140,14 @@ export default async function ServicePage({ params }: Props) {
                     sizes="(max-width: 1024px) 50vw, 33vw"
                     className="object-cover"
                   />
-                ) : (
+                </div>
+              ) : (
+                <div className="card-glass glass-edge relative flex aspect-[4/3] w-full max-w-md items-center justify-center p-10">
                   <span style={{ color: 'var(--pole-accent-text)' }} aria-hidden>
                     <Icon className="h-32 w-32 opacity-90" />
                   </span>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
