@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import { Phone, ArrowRight } from 'lucide-react'
-import { SITE_CONFIG } from '@/lib/data'
+import { getSiteSettings } from '@/lib/content'
 import LiquidBackground from '@/components/ui/LiquidBackground'
 
-export default function CtaBanner() {
+export default async function CtaBanner() {
+  const { company } = await getSiteSettings()
+  const phone = company.phones[0]
   return (
     <section className="relative overflow-hidden bg-background py-16 md:py-24" aria-labelledby="cta-heading">
       <LiquidBackground density="rich" />
@@ -22,9 +24,9 @@ export default function CtaBanner() {
               Demander un devis gratuit
               <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
-            <a href={`tel:${SITE_CONFIG.phones[0].replace(/\s/g, '')}`} className="btn-glass px-7 py-3.5">
+            <a href={`tel:${phone.replace(/\s/g, '')}`} className="btn-glass px-7 py-3.5">
               <Phone className="h-4 w-4" aria-hidden />
-              {SITE_CONFIG.phones[0]}
+              {phone}
             </a>
           </div>
         </div>

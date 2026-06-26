@@ -1,14 +1,15 @@
 import Link from 'next/link'
 import { Phone, Mail, MapPin, Clock, Facebook, Linkedin, MessageCircle } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/data'
+import { getSiteSettings } from '@/lib/content'
 import Logo from '@/components/ui/Logo'
 
 const SERVICES_LINKS = [
-  { label: 'Bâtiment & Travaux Publics', href: '/services/btp' },
-  { label: 'Commerce général', href: '/services/commerce-general' },
-  { label: 'Logistique & Transport', href: '/services/logistique-transport' },
-  { label: 'Import-Export', href: '/services/import-export' },
-  { label: 'Conseil & Services', href: '/services/conseil' },
+  { label: 'BTP & Construction', href: '/services/btp' },
+  { label: 'PLANÈTE — Carrelages & Finitions', href: '/services/commerce-general' },
+  { label: '2AC TRANSIT', href: '/services/2ac-transit' },
+  { label: '2AC CleanTech', href: '/services/cleantech' },
+  { label: 'Ferrorail (FRS)', href: '/services/ferrorail' },
 ]
 
 const COMPANY_LINKS = [
@@ -24,8 +25,11 @@ const LEGAL_LINKS = [
   { label: 'Politique de confidentialité', href: '/politique-confidentialite' },
 ]
 
-export default function Footer() {
+export default async function Footer() {
   const year = new Date().getFullYear()
+  const settings = await getSiteSettings()
+  const c = settings.company
+  const hours = settings.hours
 
   return (
     <footer className="relative overflow-hidden border-t border-line bg-surface text-ink" aria-label="Pied de page">
@@ -40,7 +44,7 @@ export default function Footer() {
               <Logo height={40} />
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-muted">
-              {SITE_CONFIG.tagline}. Votre partenaire de confiance au service de vos projets depuis plus de 10 ans en Guinée.
+              {c.tagline}. Votre partenaire de confiance au service de vos projets depuis plus de 10 ans en Guinée.
             </p>
             <div className="mt-5 flex gap-3">
               <a href={SITE_CONFIG.social.facebook} aria-label="Facebook" className="flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-ink/5 text-ink transition-colors hover:border-brand hover:bg-brand hover:text-white">
@@ -89,26 +93,26 @@ export default function Footer() {
             <address className="not-italic space-y-4">
               <div className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand" aria-hidden />
-                <span className="text-sm text-muted">{SITE_CONFIG.address}</span>
+                <span className="text-sm text-muted">{c.address}</span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 shrink-0 text-brand" aria-hidden />
-                <a href={`tel:${SITE_CONFIG.phones[0].replace(/\s/g, '')}`} className="text-sm text-muted transition-colors hover:text-ink">
-                  {SITE_CONFIG.phones[0]}
+                <a href={`tel:${c.phones[0].replace(/\s/g, '')}`} className="text-sm text-muted transition-colors hover:text-ink">
+                  {c.phones[0]}
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="h-4 w-4 shrink-0 text-brand" aria-hidden />
-                <a href={`mailto:${SITE_CONFIG.emails[0]}`} className="text-sm text-muted transition-colors hover:text-ink">
-                  {SITE_CONFIG.emails[0]}
+                <a href={`mailto:${c.emails[0]}`} className="text-sm text-muted transition-colors hover:text-ink">
+                  {c.emails[0]}
                 </a>
               </div>
               <div className="flex items-start gap-3">
                 <Clock className="mt-0.5 h-4 w-4 shrink-0 text-brand" aria-hidden />
                 <div className="text-sm text-muted">
-                  <p>Lun–Ven : {SITE_CONFIG.hours.mon_fri}</p>
-                  <p>Samedi : {SITE_CONFIG.hours.sat}</p>
-                  <p>Dimanche : {SITE_CONFIG.hours.sun}</p>
+                  <p>Lun–Ven : {hours.mon_fri}</p>
+                  <p>Samedi : {hours.sat}</p>
+                  <p>Dimanche : {hours.sun}</p>
                 </div>
               </div>
             </address>
@@ -120,7 +124,7 @@ export default function Footer() {
       <div className="border-t border-line">
         <div className="container-base flex flex-col items-center justify-between gap-3 py-6 sm:flex-row">
           <p className="text-xs text-faint">
-            © {year} {SITE_CONFIG.name}. Tous droits réservés.
+            © {year} {c.name}. Tous droits réservés.
           </p>
           <div className="flex items-center gap-4">
             {LEGAL_LINKS.map((link) => (

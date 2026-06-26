@@ -1,9 +1,11 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import CookieBanner from '@/components/layout/CookieBanner'
+import { getSiteSettings } from '@/lib/content'
 
 /** Layout du site public : en-tête, contenu, pied de page, bannière cookies. */
-export default function SiteLayout({ children }: { children: React.ReactNode }) {
+export default async function SiteLayout({ children }: { children: React.ReactNode }) {
+  const settings = await getSiteSettings()
   return (
     <>
       <a
@@ -12,7 +14,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       >
         Aller au contenu principal
       </a>
-      <Header />
+      <Header phone={settings.company.phones[0]} hours={settings.hours} />
       <main id="main-content" tabIndex={-1}>
         {children}
       </main>

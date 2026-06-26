@@ -5,9 +5,13 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X, Phone, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { SITE_CONFIG } from '@/lib/data'
 import Logo from '@/components/ui/Logo'
 import ThemeToggle from '@/components/theme/ThemeToggle'
+
+interface HeaderProps {
+  phone: string
+  hours: { mon_fri: string; sat: string; sun: string }
+}
 
 const NAV_LINKS = [
   { label: 'Accueil', href: '/' },
@@ -28,7 +32,7 @@ const NAV_LINKS = [
   { label: 'Contact', href: '/contact' },
 ]
 
-export default function Header() {
+export default function Header({ phone, hours }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -57,13 +61,13 @@ export default function Header() {
       {/* Top bar */}
       <div className="hidden border-b border-line/60 md:block">
         <div className="container-base flex items-center justify-between py-2 text-xs text-muted">
-          <span>Lun–Ven : {SITE_CONFIG.hours.mon_fri} · Sam : {SITE_CONFIG.hours.sat}</span>
+          <span>Lun–Ven : {hours.mon_fri} · Sam : {hours.sat}</span>
           <a
-            href={`tel:${SITE_CONFIG.phones[0].replace(/\s/g, '')}`}
+            href={`tel:${phone.replace(/\s/g, '')}`}
             className="flex items-center gap-1.5 font-medium text-ink transition-colors hover:text-brand"
           >
             <Phone className="h-3 w-3" aria-hidden />
-            {SITE_CONFIG.phones[0]}
+            {phone}
           </a>
         </div>
       </div>
@@ -229,7 +233,7 @@ export default function Header() {
             </ul>
             <div className="mt-4 flex items-center gap-3 px-4">
               <a
-                href={`tel:${SITE_CONFIG.phones[0].replace(/\s/g, '')}`}
+                href={`tel:${phone.replace(/\s/g, '')}`}
                 className="btn-outline flex-1 py-2.5 text-sm"
               >
                 <Phone className="h-4 w-4" aria-hidden />

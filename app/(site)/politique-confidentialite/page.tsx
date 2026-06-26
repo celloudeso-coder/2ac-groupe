@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SITE_CONFIG } from '@/lib/data'
+import { getSiteSettings } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'Politique de confidentialité',
@@ -7,7 +7,10 @@ export const metadata: Metadata = {
   robots: { index: false },
 }
 
-export default function PolitiqueConfidentialitePage() {
+export const revalidate = 60
+
+export default async function PolitiqueConfidentialitePage() {
+  const { company: c } = await getSiteSettings()
   return (
     <article className="section-padding bg-background" aria-labelledby="privacy-heading">
       <div className="container-base max-w-3xl">
@@ -20,10 +23,10 @@ export default function PolitiqueConfidentialitePage() {
           <h2>1. Responsable du traitement</h2>
           <p>
             Le responsable du traitement de vos données personnelles est :<br />
-            <strong>{SITE_CONFIG.name}</strong><br />
-            {SITE_CONFIG.address}<br />
-            Email : {SITE_CONFIG.emails[0]}<br />
-            Téléphone : {SITE_CONFIG.phones[0]}
+            <strong>{c.name}</strong><br />
+            {c.address}<br />
+            Email : {c.emails[0]}<br />
+            Téléphone : {c.phones[0]}
           </p>
 
           <h2>2. Données collectées</h2>
@@ -67,7 +70,7 @@ export default function PolitiqueConfidentialitePage() {
             <li><strong>Droit à la portabilité</strong> : recevoir vos données dans un format structuré.</li>
           </ul>
           <p>
-            Pour exercer ces droits, contactez-nous à : {SITE_CONFIG.emails[0]}
+            Pour exercer ces droits, contactez-nous à : {c.emails[0]}
           </p>
 
           <h2>8. Cookies</h2>
@@ -95,8 +98,8 @@ export default function PolitiqueConfidentialitePage() {
           <h2>11. Contact</h2>
           <p>
             Pour toute question relative à la présente politique ou à vos données personnelles :<br />
-            Email : {SITE_CONFIG.emails[0]}<br />
-            Téléphone : {SITE_CONFIG.phones[0]}
+            Email : {c.emails[0]}<br />
+            Téléphone : {c.phones[0]}
           </p>
         </div>
       </div>

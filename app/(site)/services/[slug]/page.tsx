@@ -5,8 +5,7 @@ import Image from 'next/image'
 import { CheckCircle, ArrowRight, Building2, Store, Truck, Globe, Lightbulb, Sparkles, TrainFront, Phone, Mail } from 'lucide-react'
 import CtaBanner from '@/components/home/CtaBanner'
 import LiquidBackground from '@/components/ui/LiquidBackground'
-import { SITE_CONFIG } from '@/lib/data'
-import { getServiceBySlug, getServices } from '@/lib/content'
+import { getServiceBySlug, getServices, getSiteSettings } from '@/lib/content'
 import { accentForText } from '@/lib/color'
 
 const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -47,6 +46,7 @@ export default async function ServicePage({ params }: Props) {
 
   const Icon = ICONS[service.icon ?? ''] ?? Building2
   const allServices = await getServices()
+  const { company } = await getSiteSettings()
   const otherServices = allServices.filter((s) => s.slug !== slug).slice(0, 3)
 
   // Couleur d'accent du pôle : brute pour les aplats, variante AA pour le texte.
@@ -270,11 +270,11 @@ export default async function ServicePage({ params }: Props) {
                   <ArrowRight className="h-4 w-4" aria-hidden />
                 </Link>
                 <a
-                  href={`tel:${SITE_CONFIG.phones[0].replace(/\s/g, '')}`}
+                  href={`tel:${company.phones[0].replace(/\s/g, '')}`}
                   className="btn-outline mt-3 w-full justify-center py-2.5 text-sm"
                 >
                   <Phone className="h-4 w-4" aria-hidden />
-                  {SITE_CONFIG.phones[0]}
+                  {company.phones[0]}
                 </a>
               </div>
 

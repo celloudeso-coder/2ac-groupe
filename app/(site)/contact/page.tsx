@@ -3,7 +3,7 @@ import { Phone, Mail, MapPin, Clock, FileText } from 'lucide-react'
 import ContactForm from '@/components/forms/ContactForm'
 import DevisForm from '@/components/forms/DevisForm'
 import PageHero from '@/components/ui/PageHero'
-import { SITE_CONFIG } from '@/lib/data'
+import { getSiteSettings } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'Contact & Devis',
@@ -11,7 +11,12 @@ export const metadata: Metadata = {
     'Contactez 2AC GROUPE pour tout projet BTP, logistique ou import-export. Devis gratuit sous 24h. Bureau à Lambanyi, Conakry.',
 }
 
-export default function ContactPage() {
+export const revalidate = 60
+
+export default async function ContactPage() {
+  const settings = await getSiteSettings()
+  const c = settings.company
+  const hours = settings.hours
   return (
     <>
       <PageHero
@@ -35,7 +40,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-wide text-faint">Adresse</p>
-                      <p className="mt-0.5 text-sm text-ink/90">{SITE_CONFIG.address}</p>
+                      <p className="mt-0.5 text-sm text-ink/90">{c.address}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -44,8 +49,8 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-wide text-faint">Téléphone</p>
-                      <a href={`tel:${SITE_CONFIG.phones[0].replace(/\s/g, '')}`} className="mt-0.5 block text-sm text-ink/90 hover:text-brand">
-                        {SITE_CONFIG.phones[0]}
+                      <a href={`tel:${c.phones[0].replace(/\s/g, '')}`} className="mt-0.5 block text-sm text-ink/90 hover:text-brand">
+                        {c.phones[0]}
                       </a>
                     </div>
                   </div>
@@ -55,7 +60,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-wide text-faint">Email</p>
-                      {SITE_CONFIG.emails.map((email) => (
+                      {c.emails.map((email) => (
                         <a key={email} href={`mailto:${email}`} className="mt-0.5 block text-sm text-ink/90 hover:text-brand">
                           {email}
                         </a>
@@ -69,9 +74,9 @@ export default function ContactPage() {
                     <div>
                       <p className="text-xs font-semibold uppercase tracking-wide text-faint">Horaires</p>
                       <div className="mt-0.5 space-y-0.5 text-sm text-ink/90">
-                        <p>Lun – Ven : {SITE_CONFIG.hours.mon_fri}</p>
-                        <p>Samedi : {SITE_CONFIG.hours.sat}</p>
-                        <p>Dimanche : {SITE_CONFIG.hours.sun}</p>
+                        <p>Lun – Ven : {hours.mon_fri}</p>
+                        <p>Samedi : {hours.sat}</p>
+                        <p>Dimanche : {hours.sun}</p>
                       </div>
                     </div>
                   </div>
