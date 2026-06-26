@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { MapPin, Calendar, Building2 } from 'lucide-react'
 import CtaBanner from '@/components/home/CtaBanner'
 import PageHero from '@/components/ui/PageHero'
-import { getProjects } from '@/lib/content'
+import { getProjects, getStats } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'Nos Réalisations',
@@ -19,14 +19,8 @@ const PLACEHOLDER_GRADIENTS = [
   'from-brand-800 via-surface-3 to-black',
 ]
 
-const PORTFOLIO_STATS = [
-  { label: 'Projets BTP', value: '80+' },
-  { label: 'Expéditions logistiques', value: '2 000+' },
-  { label: 'Opérations import-export', value: '50+' },
-]
-
 export default async function RealisationsPage() {
-  const projects = await getProjects()
+  const [projects, stats] = await Promise.all([getProjects(), getStats('realisations')])
   return (
     <>
       <PageHero
@@ -39,8 +33,8 @@ export default async function RealisationsPage() {
       <div className="bg-background pb-4">
         <div className="container-base">
           <dl className="card-glass grid grid-cols-3 gap-6 p-6 text-center">
-            {PORTFOLIO_STATS.map((s, i) => (
-              <div key={s.label} className={i > 0 ? 'border-l border-line' : ''}>
+            {stats.map((s, i) => (
+              <div key={s.id} className={i > 0 ? 'border-l border-line' : ''}>
                 <dd className="font-display text-3xl font-extrabold text-brand">{s.value}</dd>
                 <dt className="mt-1 text-xs text-muted">{s.label}</dt>
               </div>

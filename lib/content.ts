@@ -18,6 +18,10 @@ import {
   TESTIMONIALS_DATA,
   BLOG_POSTS_DATA,
   TEAM_DATA,
+  VALUES_DATA,
+  STATS_DATA,
+  TIMELINE_DATA,
+  SECTION_SETTINGS,
   SITE_CONFIG,
 } from '@/lib/data'
 import type {
@@ -26,6 +30,9 @@ import type {
   Testimonial,
   BlogPost,
   TeamMember,
+  ValueItem,
+  StatItem,
+  TimelineEvent,
   SiteSettings,
 } from '@/lib/types'
 
@@ -89,6 +96,9 @@ const fallbackTeam = TEAM_DATA.map((m, i) => ({
   id: String(i),
   created_at: '',
 })) as TeamMember[]
+const fallbackValues = VALUES_DATA.map((v, i) => ({ ...v, id: String(i) })) as ValueItem[]
+const fallbackStats = STATS_DATA.map((s, i) => ({ ...s, id: String(i) })) as StatItem[]
+const fallbackTimeline = TIMELINE_DATA.map((t, i) => ({ ...t, id: String(i) })) as TimelineEvent[]
 
 const fallbackSettings: SiteSettings = {
   company: {
@@ -102,6 +112,10 @@ const fallbackSettings: SiteSettings = {
   },
   hours: { ...SITE_CONFIG.hours },
   legal: { ...SITE_CONFIG.legal },
+  mission: { ...SECTION_SETTINGS.mission },
+  vision: { ...SECTION_SETTINGS.vision },
+  why_choose: { ...SECTION_SETTINGS.why_choose, bullets: [...SECTION_SETTINGS.why_choose.bullets] },
+  ceo_message: { ...SECTION_SETTINGS.ceo_message },
 }
 
 // --- Services --------------------------------------------------------------
@@ -277,6 +291,62 @@ export const getTeamMembers = cache(async (): Promise<TeamMember[]> => {
   }
 })
 
+// --- Valeurs / Stats / Timeline (sections éditables, migration 006) ---------
+
+export const getValues = cache(async (): Promise<ValueItem[]> => {
+  if (!supabaseConfigured()) return fallbackValues
+  try {
+    const supabase = getReadClient()
+    const { data, error } = await supabase
+      .from('values')
+      .select('*')
+      .eq('status', 'published')
+      .order('sort_order', { ascending: true })
+    if (error) throw error
+    return data && data.length > 0 ? (data as ValueItem[]) : fallbackValues
+  } catch (e) {
+    console.error('[content] getValues → fallback statique :', e)
+    return fallbackValues
+  }
+})
+
+export const getStats = cache(async (group = 'home'): Promise<StatItem[]> => {
+  if (!supabaseConfigured()) return fallbackStats.filter((s) => s.group === group)
+  try {
+    const supabase = getReadClient()
+    const { data, error } = await supabase
+      .from('stats')
+      .select('*')
+      .eq('status', 'published')
+      .eq('group', group)
+      .order('sort_order', { ascending: true })
+    if (error) throw error
+    return data && data.length > 0
+      ? (data as StatItem[])
+      : fallbackStats.filter((s) => s.group === group)
+  } catch (e) {
+    console.error('[content] getStats → fallback statique :', e)
+    return fallbackStats.filter((s) => s.group === group)
+  }
+})
+
+export const getTimeline = cache(async (): Promise<TimelineEvent[]> => {
+  if (!supabaseConfigured()) return fallbackTimeline
+  try {
+    const supabase = getReadClient()
+    const { data, error } = await supabase
+      .from('timeline_events')
+      .select('*')
+      .eq('status', 'published')
+      .order('sort_order', { ascending: true })
+    if (error) throw error
+    return data && data.length > 0 ? (data as TimelineEvent[]) : fallbackTimeline
+  } catch (e) {
+    console.error('[content] getTimeline → fallback statique :', e)
+    return fallbackTimeline
+  }
+})
+
 // --- Paramètres du site ----------------------------------------------------
 
 export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
@@ -286,7 +356,7 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
     const { data, error } = await supabase
       .from('site_settings')
       .select('key, value')
-      .in('key', ['company', 'hours', 'legal'])
+      .in('key', ['company', 'hours', 'legal', 'mission', 'vision', 'why_choose', 'ceo_message'])
     if (error) throw error
     if (!data || data.length === 0) return fallbackSettings
 
@@ -298,6 +368,10 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
       company: { ...fallbackSettings.company, ...(map.company as object) },
       hours: { ...fallbackSettings.hours, ...(map.hours as object) },
       legal: { ...fallbackSettings.legal, ...(map.legal as object) } as SiteSettings['legal'],
+      mission: { ...fallbackSettings.mission, ...(map.mission as object) } as SiteSettings['mission'],
+      vision: { ...fallbackSettings.vision, ...(map.vision as object) } as SiteSettings['vision'],
+      why_choose: { ...fallbackSettings.why_choose, ...(map.why_choose as object) } as SiteSettings['why_choose'],
+      ceo_message: { ...fallbackSettings.ceo_message, ...(map.ceo_message as object) } as SiteSettings['ceo_message'],
     }
   } catch (e) {
     console.error('[content] getSiteSettings → fallback statique :', e)

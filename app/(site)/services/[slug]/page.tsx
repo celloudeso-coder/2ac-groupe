@@ -71,24 +71,28 @@ export default async function ServicePage({ params }: Props) {
             <span aria-hidden>/</span>
             <span className="text-ink">{service.brand_name ?? service.title}</span>
           </nav>
-          <div className="flex items-start gap-5">
-            {service.logo_url ? (
-              <Image
-                src={service.logo_url}
-                alt={service.brand_name ?? service.title}
-                width={64}
-                height={64}
-                className="h-16 w-16 shrink-0 rounded-2xl object-contain"
-              />
-            ) : (
-              <div
-                className="glass flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl"
-                style={{ color: 'var(--pole-accent-text)' }}
-              >
-                <Icon className="h-8 w-8" aria-hidden />
-              </div>
-            )}
+          <div className="grid items-center gap-10 lg:grid-cols-2">
+            {/* Texte (gauche) */}
             <div>
+              {/* Logo/icône inline — visible sur mobile uniquement */}
+              <div className="mb-5 lg:hidden">
+                {service.logo_url ? (
+                  <Image
+                    src={service.logo_url}
+                    alt={service.brand_name ?? service.title}
+                    width={56}
+                    height={56}
+                    className="h-14 w-14 rounded-2xl object-contain"
+                  />
+                ) : (
+                  <div
+                    className="glass flex h-14 w-14 items-center justify-center rounded-2xl"
+                    style={{ color: 'var(--pole-accent-text)' }}
+                  >
+                    <Icon className="h-7 w-7" aria-hidden />
+                  </div>
+                )}
+              </div>
               {service.brand_name && service.brand_name !== service.title && (
                 <p
                   className="mb-1 text-sm font-semibold uppercase tracking-widest"
@@ -100,8 +104,37 @@ export default async function ServicePage({ params }: Props) {
               <h1 id="service-heading" className="font-display text-3xl font-extrabold text-balance text-ink md:text-4xl lg:text-5xl">
                 {service.title}
               </h1>
-              {service.tagline && <p className="mt-2 text-base font-medium text-ink/80">{service.tagline}</p>}
+              {service.tagline && <p className="mt-3 text-base font-medium text-ink/80">{service.tagline}</p>}
               <p className="mt-3 text-lg text-muted">{service.short_desc}</p>
+            </div>
+
+            {/* Panneau visuel (droite) — desktop uniquement */}
+            <div className="relative hidden lg:flex lg:justify-center">
+              {/* Halo d'accent discret (statique, sans animation) */}
+              <div
+                className="pointer-events-none absolute inset-0 -z-0 blur-3xl"
+                style={{
+                  background:
+                    'radial-gradient(closest-side, var(--pole-accent) 0%, transparent 75%)',
+                  opacity: 0.18,
+                }}
+                aria-hidden
+              />
+              <div className="card-glass glass-edge relative flex aspect-[4/3] w-full max-w-md items-center justify-center p-10">
+                {service.logo_url ? (
+                  <Image
+                    src={service.logo_url}
+                    alt={service.brand_name ?? service.title}
+                    width={420}
+                    height={280}
+                    className="max-h-44 w-auto object-contain"
+                  />
+                ) : (
+                  <span style={{ color: 'var(--pole-accent-text)' }} aria-hidden>
+                    <Icon className="h-32 w-32 opacity-90" />
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>

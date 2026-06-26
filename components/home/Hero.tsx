@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
-import { STATS } from '@/lib/data'
+import { getStats } from '@/lib/content'
 import LiquidBackground from '@/components/ui/LiquidBackground'
 import AnimatedCounter from '@/components/ui/AnimatedCounter'
 
-export default function Hero() {
+export default async function Hero() {
+  const stats = await getStats('home')
   return (
     <section className="relative overflow-hidden bg-background text-ink" aria-labelledby="hero-heading">
       {/* Image de fond (réfractée par le verre, très atténuée) */}
@@ -57,10 +58,10 @@ export default function Hero() {
 
           {/* Statistiques en verre */}
           <dl className="card-glass mt-12 grid grid-cols-2 gap-4 p-6 sm:grid-cols-4 sm:gap-2">
-            {STATS.map((stat, i) => (
-              <div key={stat.label} className={i > 0 ? 'sm:border-l sm:border-line sm:pl-4' : ''}>
+            {stats.map((stat, i) => (
+              <div key={stat.id} className={i > 0 ? 'sm:border-l sm:border-line sm:pl-4' : ''}>
                 <dd className="font-display text-3xl font-extrabold text-brand">
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                  <AnimatedCounter value={stat.value} />
                 </dd>
                 <dt className="mt-1 text-xs text-muted">{stat.label}</dt>
               </div>

@@ -83,6 +83,33 @@ export interface TeamMember {
   created_at: string
 }
 
+export interface ValueItem {
+  id: string
+  icon: string | null
+  title: string
+  description: string | null
+  sort_order: number
+  status: ContentStatus
+}
+
+export interface StatItem {
+  id: string
+  value: string
+  label: string
+  group: string
+  sort_order: number
+  status: ContentStatus
+}
+
+export interface TimelineEvent {
+  id: string
+  year: string
+  title: string
+  description: string | null
+  sort_order: number
+  status: ContentStatus
+}
+
 export interface ContactSubmission {
   id?: string
   type: SubmissionType
@@ -118,4 +145,8 @@ export interface SiteSettings {
     cogerante?: string
     address: string
   }
+  mission?: { title: string; body: string }
+  vision?: { title: string; body: string }
+  why_choose?: { heading: string; intro: string; bullets: string[] }
+  ceo_message?: { quote: string }
 }

@@ -74,6 +74,13 @@ const ICON_OPTIONS = [
   { value: 'lightbulb', label: 'Ampoule (Conseil)' },
 ]
 
+const VALUE_ICON_OPTIONS = [
+  { value: 'zap', label: 'Éclair (Innovation)' },
+  { value: 'shield', label: 'Bouclier (Qualité)' },
+  { value: 'handshake', label: 'Poignée de main (Fiabilité)' },
+  { value: 'layers', label: 'Couches (Polyvalence)' },
+]
+
 export const ENTITIES: Record<string, EntityConfig> = {
   services: {
     key: 'services',
@@ -213,6 +220,80 @@ export const ENTITIES: Record<string, EntityConfig> = {
       { name: 'bio', label: 'Biographie / mot', type: 'textarea', colSpan: 2 },
       { name: 'photo_url', label: 'Photo', type: 'image', bucket: 'team' },
       { name: 'is_ceo', label: 'Dirigeant (affiche le « mot du dirigeant »)', type: 'toggle', colSpan: 2 },
+      { name: 'sort_order', label: 'Ordre', type: 'number', integer: true, min: 0 },
+      { name: 'status', label: 'Statut', type: 'select', required: true, options: STATUS_OPTIONS },
+    ],
+  },
+
+  values: {
+    key: 'values',
+    table: 'values',
+    labelSingular: 'Valeur',
+    labelPlural: 'Valeurs',
+    revalidate: ['/', '/a-propos'],
+    orderBy: { column: 'sort_order', ascending: true },
+    listColumns: [
+      { key: 'title', label: 'Titre' },
+      { key: 'sort_order', label: 'Ordre' },
+      { key: 'status', label: 'Statut', type: 'status' },
+    ],
+    fields: [
+      { name: 'icon', label: 'Icône', type: 'select', options: VALUE_ICON_OPTIONS },
+      { name: 'title', label: 'Titre', type: 'text', required: true },
+      { name: 'description', label: 'Description', type: 'textarea', colSpan: 2 },
+      { name: 'sort_order', label: 'Ordre', type: 'number', integer: true, min: 0 },
+      { name: 'status', label: 'Statut', type: 'select', required: true, options: STATUS_OPTIONS },
+    ],
+  },
+
+  stats: {
+    key: 'stats',
+    table: 'stats',
+    labelSingular: 'Statistique',
+    labelPlural: 'Statistiques',
+    revalidate: ['/', '/realisations'],
+    orderBy: { column: 'sort_order', ascending: true },
+    listColumns: [
+      { key: 'value', label: 'Valeur' },
+      { key: 'label', label: 'Libellé' },
+      { key: 'group', label: 'Groupe' },
+      { key: 'status', label: 'Statut', type: 'status' },
+    ],
+    fields: [
+      { name: 'value', label: 'Valeur', type: 'text', required: true, help: 'ex : 10+, 99%, 2 000+' },
+      { name: 'label', label: 'Libellé', type: 'text', required: true, colSpan: 2 },
+      {
+        name: 'group',
+        label: 'Groupe',
+        type: 'select',
+        required: true,
+        options: [
+          { value: 'home', label: 'Accueil' },
+          { value: 'realisations', label: 'Réalisations' },
+        ],
+      },
+      { name: 'sort_order', label: 'Ordre', type: 'number', integer: true, min: 0 },
+      { name: 'status', label: 'Statut', type: 'select', required: true, options: STATUS_OPTIONS },
+    ],
+  },
+
+  timeline_events: {
+    key: 'timeline_events',
+    table: 'timeline_events',
+    labelSingular: 'Événement',
+    labelPlural: 'Histoire',
+    revalidate: ['/a-propos'],
+    orderBy: { column: 'sort_order', ascending: true },
+    listColumns: [
+      { key: 'year', label: 'Année' },
+      { key: 'title', label: 'Titre' },
+      { key: 'sort_order', label: 'Ordre' },
+      { key: 'status', label: 'Statut', type: 'status' },
+    ],
+    fields: [
+      { name: 'year', label: 'Année', type: 'text', required: true },
+      { name: 'title', label: 'Titre', type: 'text', required: true, colSpan: 2 },
+      { name: 'description', label: 'Description', type: 'textarea', colSpan: 2 },
       { name: 'sort_order', label: 'Ordre', type: 'number', integer: true, min: 0 },
       { name: 'status', label: 'Statut', type: 'select', required: true, options: STATUS_OPTIONS },
     ],

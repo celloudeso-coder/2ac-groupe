@@ -154,6 +154,28 @@ const settingsSchema = z.object({
     sat: z.string().trim().min(1, 'Horaire requis.'),
     sun: z.string().trim().min(1, 'Horaire requis.'),
   }),
+  mission: z
+    .object({
+      title: z.string().trim().min(1, 'Le titre de la mission est requis.'),
+      body: z.string().trim().min(1, 'Le texte de la mission est requis.'),
+    })
+    .optional(),
+  vision: z
+    .object({
+      title: z.string().trim().min(1, 'Le titre de la vision est requis.'),
+      body: z.string().trim().min(1, 'Le texte de la vision est requis.'),
+    })
+    .optional(),
+  why_choose: z
+    .object({
+      heading: z.string().trim().min(1, 'Le titre « Pourquoi nous choisir » est requis.'),
+      intro: z.string().trim().min(1, "L'intro « Pourquoi nous choisir » est requise."),
+      bullets: z.array(z.string().trim().min(1)).default([]),
+    })
+    .optional(),
+  ceo_message: z
+    .object({ quote: z.string().trim().min(1, 'La citation du dirigeant est requise.') })
+    .optional(),
 })
 
 export async function updateSettings(payload: unknown): Promise<ActionResult> {
@@ -165,16 +187,19 @@ export async function updateSettings(payload: unknown): Promise<ActionResult> {
     return { ok: false, error: parsed.error.issues[0]?.message ?? 'Données invalides.' }
   }
 
-  const { error } = await auth.supabase.from('site_settings').upsert(
-    [
-      { key: 'company', value: parsed.data.company },
-      { key: 'hours', value: parsed.data.hours },
-    ],
-    { onConflict: 'key' }
-  )
+  const rows: { key: string; value: unknown }[] = [
+    { key: 'company', value: parsed.data.company },
+    { key: 'hours', value: parsed.data.hours },
+  ]
+  if (parsed.data.mission) rows.push({ key: 'mission', value: parsed.data.mission })
+  if (parsed.data.vision) rows.push({ key: 'vision', value: parsed.data.vision })
+  if (parsed.data.why_choose) rows.push({ key: 'why_choose', value: parsed.data.why_choose })
+  if (parsed.data.ceo_message) rows.push({ key: 'ceo_message', value: parsed.data.ceo_message })
+
+  const { error } = await auth.supabase.from('site_settings').upsert(rows, { onConflict: 'key' })
   if (error) return { ok: false, error: 'Enregistrement impossible.' }
 
-  // Les coordonnées/horaires apparaissent dans l'en-tête et le pied : tout revalider.
+  // Ces blocs apparaissent sur l'accueil, à propos et réalisations : tout revalider.
   revalidatePath('/', 'layout')
   return { ok: true }
 }

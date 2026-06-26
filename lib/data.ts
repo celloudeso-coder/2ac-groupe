@@ -1,4 +1,13 @@
-import type { Service, Project, Testimonial, BlogPost, TeamMember } from './types'
+import type {
+  Service,
+  Project,
+  Testimonial,
+  BlogPost,
+  TeamMember,
+  ValueItem,
+  StatItem,
+  TimelineEvent,
+} from './types'
 
 export const SITE_CONFIG = {
   name: '2AC GROUPE',
@@ -31,13 +40,6 @@ export const SITE_CONFIG = {
     whatsapp: 'https://wa.me/224629045744',
   },
 } as const
-
-export const STATS = [
-  { value: 10, suffix: '+', label: "Ans d'expérience" },
-  { value: 99, suffix: '%', label: 'Taux de réussite logistique' },
-  { value: 5, suffix: '', label: "Pôles d'activité" },
-  { value: 150, suffix: '+', label: 'Projets réalisés' },
-] as const
 
 export const SERVICES_DATA: Omit<Service, 'id' | 'created_at' | 'updated_at'>[] = [
   {
@@ -425,29 +427,88 @@ export const TEAM_DATA: Omit<TeamMember, 'id' | 'created_at'>[] = [
   },
 ]
 
-export const COMPANY_VALUES = [
+// ============================================================
+// Données de secours pour les sections éditables (migration 006).
+// Mêmes valeurs que le contenu historiquement codé en dur → aucune
+// régression si Supabase est indisponible.
+// ============================================================
+
+export const VALUES_DATA: Omit<ValueItem, 'id'>[] = [
   {
-    icon: 'Zap',
+    icon: 'zap',
     title: 'Innovation',
     description:
-      "Nous adoptons les meilleures pratiques et technologies pour vous offrir des solutions modernes adaptées au contexte guinéen et international.",
+      'Nous adoptons les meilleures pratiques et technologies pour vous offrir des solutions modernes adaptées au contexte guinéen et international.',
+    sort_order: 1,
+    status: 'published',
   },
   {
-    icon: 'Shield',
+    icon: 'shield',
     title: 'Qualité',
     description:
-      "Chaque projet, chaque colis, chaque livraison est traité avec la même exigence de qualité. Nos normes ne souffrent aucun compromis.",
+      'Chaque projet, chaque colis, chaque livraison est traité avec la même exigence de qualité. Nos normes ne souffrent aucun compromis.',
+    sort_order: 2,
+    status: 'published',
   },
   {
-    icon: 'Handshake',
+    icon: 'handshake',
     title: 'Fiabilité',
     description:
-      "Nos clients nous font confiance depuis 10 ans parce que nous tenons nos engagements : délais, budget, qualité. Toujours.",
+      'Nos clients nous font confiance depuis 10 ans parce que nous tenons nos engagements : délais, budget, qualité. Toujours.',
+    sort_order: 3,
+    status: 'published',
   },
   {
-    icon: 'Layers',
+    icon: 'layers',
     title: 'Polyvalence',
     description:
       "Notre ancrage dans 5 secteurs complémentaires nous permet de vous proposer des solutions intégrées que peu d'acteurs peuvent offrir.",
+    sort_order: 4,
+    status: 'published',
   },
-] as const
+]
+
+export const STATS_DATA: Omit<StatItem, 'id'>[] = [
+  { value: '10+', label: "Ans d'expérience", group: 'home', sort_order: 1, status: 'published' },
+  { value: '99%', label: 'Taux de réussite logistique', group: 'home', sort_order: 2, status: 'published' },
+  { value: '5', label: "Pôles d'activité", group: 'home', sort_order: 3, status: 'published' },
+  { value: '150+', label: 'Projets réalisés', group: 'home', sort_order: 4, status: 'published' },
+  { value: '80+', label: 'Projets BTP', group: 'realisations', sort_order: 1, status: 'published' },
+  { value: '2 000+', label: 'Expéditions logistiques', group: 'realisations', sort_order: 2, status: 'published' },
+  { value: '50+', label: 'Opérations import-export', group: 'realisations', sort_order: 3, status: 'published' },
+]
+
+export const TIMELINE_DATA: Omit<TimelineEvent, 'id'>[] = [
+  { year: '2014', title: 'Fondation', description: 'Création de 2AC GROUPE à Conakry, initialement focalisée sur le BTP résidentiel.', sort_order: 1, status: 'published' },
+  { year: '2016', title: 'Expansion commerce', description: "Ouverture de l'activité de vente de carreaux et produits de finition pour les professionnels du bâtiment.", sort_order: 2, status: 'published' },
+  { year: '2018', title: 'Logistique internationale', description: "Lancement du service d'expédition express vers l'Europe et les États-Unis, en partenariat avec Kotedi.com.", sort_order: 3, status: 'published' },
+  { year: '2020', title: 'Import-Export', description: "Développement de l'activité import-export : matériaux BTP, agroalimentaire et équipements industriels.", sort_order: 4, status: 'published' },
+  { year: '2022', title: 'Conseil & Services', description: 'Ouverture du pôle conseil pour accompagner les entrepreneurs et institutions dans leurs projets de développement.', sort_order: 5, status: 'published' },
+  { year: '2024', title: "Aujourd'hui", description: "5 secteurs, 150+ projets réalisés, une équipe soudée et des clients fidèles à travers l'Afrique, l'Europe et les USA.", sort_order: 6, status: 'published' },
+]
+
+export const SECTION_SETTINGS = {
+  mission: {
+    title: 'Notre mission',
+    body: "Fournir à nos clients des solutions intégrées et fiables qui couvrent l'ensemble de leur chaîne de valeur : de l'approvisionnement international à la livraison finale, en passant par la construction et la finition.\n\nNous croyons que la Guinée et l'Afrique de l'Ouest ont besoin d'entreprises capables de tenir des engagements à la hauteur des standards internationaux, tout en comprenant les réalités locales.",
+  },
+  vision: {
+    title: 'Notre vision',
+    body: "Devenir la référence incontournable en Guinée et dans la sous-région pour les entreprises et particuliers qui cherchent un partenaire unique, compétent et honnête pour leurs projets multisectoriels.\n\nNous voulons contribuer au développement économique durable de la Guinée en créant des emplois qualifiés, en transférant des compétences et en facilitant les échanges internationaux.",
+  },
+  why_choose: {
+    heading: 'Une entreprise guinéenne aux standards internationaux',
+    intro:
+      "2AC GROUPE est née de la conviction que la Guinée mérite des partenaires commerciaux qui combinent ancrage local, expertise métier et exigences de niveau international. Notre force réside dans notre capacité à intervenir de bout en bout : sourcing à l'étranger, import, construction, finition, livraison.",
+    bullets: [
+      'Interlocuteur unique pour des besoins multiples',
+      'Équipe expérimentée et disponible',
+      'Réseau de partenaires certifiés en Europe et aux USA',
+      'Transparence totale sur les coûts et les délais',
+    ],
+  },
+  ceo_message: {
+    quote:
+      'Chez 2AC GROUPE, nous avons bâti notre réputation sur une conviction simple : nos clients méritent le meilleur. Pas seulement en termes de qualité de prestation, mais aussi en termes de transparence, de ponctualité et de respect. Chaque projet que nous acceptons, nous nous y engageons entièrement.',
+  },
+}

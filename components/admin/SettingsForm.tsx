@@ -20,6 +20,14 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
     mon_fri: settings.hours.mon_fri,
     sat: settings.hours.sat,
     sun: settings.hours.sun,
+    mission_title: settings.mission?.title ?? 'Notre mission',
+    mission_body: settings.mission?.body ?? '',
+    vision_title: settings.vision?.title ?? 'Notre vision',
+    vision_body: settings.vision?.body ?? '',
+    why_heading: settings.why_choose?.heading ?? '',
+    why_intro: settings.why_choose?.intro ?? '',
+    why_bullets: (settings.why_choose?.bullets ?? []).join('\n'),
+    ceo_quote: settings.ceo_message?.quote ?? '',
   })
 
   const set = (k: string, v: string) => setForm((p) => ({ ...p, [k]: v }))
@@ -38,6 +46,10 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
         years_experience: Number(form.years_experience) || 0,
       },
       hours: { mon_fri: form.mon_fri, sat: form.sat, sun: form.sun },
+      mission: { title: form.mission_title, body: form.mission_body },
+      vision: { title: form.vision_title, body: form.vision_body },
+      why_choose: { heading: form.why_heading, intro: form.why_intro, bullets: lines(form.why_bullets) },
+      ceo_message: { quote: form.ceo_quote },
     })
     if (res.ok) {
       toast.success('Paramètres enregistrés.')
@@ -97,6 +109,64 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
             <label htmlFor="s-sun" className="label-base">Dimanche</label>
             <input id="s-sun" value={form.sun} onChange={(e) => set('sun', e.target.value)} className="input-base" placeholder="Fermé" />
           </div>
+        </div>
+      </section>
+
+      <section className="card-glass glass--solid space-y-5 p-6">
+        <h2 className="font-display text-lg font-bold text-ink">Mission</h2>
+        <p className="-mt-3 text-xs text-faint">Affichée sur la page « À propos ».</p>
+        <div>
+          <label htmlFor="s-mission-title" className="label-base">Titre</label>
+          <input id="s-mission-title" value={form.mission_title} onChange={(e) => set('mission_title', e.target.value)} className="input-base" />
+        </div>
+        <div>
+          <label htmlFor="s-mission-body" className="label-base">Texte</label>
+          <textarea id="s-mission-body" rows={4} value={form.mission_body} onChange={(e) => set('mission_body', e.target.value)} className="input-base resize-y" />
+          <p className="mt-1 text-xs text-faint">Laissez une ligne vide pour séparer les paragraphes.</p>
+        </div>
+      </section>
+
+      <section className="card-glass glass--solid space-y-5 p-6">
+        <h2 className="font-display text-lg font-bold text-ink">Vision</h2>
+        <p className="-mt-3 text-xs text-faint">Affichée sur la page « À propos ».</p>
+        <div>
+          <label htmlFor="s-vision-title" className="label-base">Titre</label>
+          <input id="s-vision-title" value={form.vision_title} onChange={(e) => set('vision_title', e.target.value)} className="input-base" />
+        </div>
+        <div>
+          <label htmlFor="s-vision-body" className="label-base">Texte</label>
+          <textarea id="s-vision-body" rows={4} value={form.vision_body} onChange={(e) => set('vision_body', e.target.value)} className="input-base resize-y" />
+          <p className="mt-1 text-xs text-faint">Laissez une ligne vide pour séparer les paragraphes.</p>
+        </div>
+      </section>
+
+      <section className="card-glass glass--solid space-y-5 p-6">
+        <h2 className="font-display text-lg font-bold text-ink">Pourquoi nous choisir</h2>
+        <p className="-mt-3 text-xs text-faint">Bloc affiché sur la page d&apos;accueil.</p>
+        <div>
+          <label htmlFor="s-why-heading" className="label-base">Titre</label>
+          <input id="s-why-heading" value={form.why_heading} onChange={(e) => set('why_heading', e.target.value)} className="input-base" />
+        </div>
+        <div>
+          <label htmlFor="s-why-intro" className="label-base">Introduction</label>
+          <textarea id="s-why-intro" rows={3} value={form.why_intro} onChange={(e) => set('why_intro', e.target.value)} className="input-base resize-y" />
+        </div>
+        <div>
+          <label htmlFor="s-why-bullets" className="label-base">Points forts</label>
+          <textarea id="s-why-bullets" rows={4} value={form.why_bullets} onChange={(e) => set('why_bullets', e.target.value)} className="input-base resize-y" />
+          <p className="mt-1 text-xs text-faint">Un point fort par ligne.</p>
+        </div>
+      </section>
+
+      <section className="card-glass glass--solid space-y-5 p-6">
+        <h2 className="font-display text-lg font-bold text-ink">Mot du dirigeant</h2>
+        <p className="-mt-3 text-xs text-faint">
+          Citation affichée sur « À propos ». Le nom, la fonction et la photo proviennent de la fiche
+          du membre marqué « Dirigeant » dans <strong className="text-ink">Équipe</strong>.
+        </p>
+        <div>
+          <label htmlFor="s-ceo-quote" className="label-base">Citation</label>
+          <textarea id="s-ceo-quote" rows={4} value={form.ceo_quote} onChange={(e) => set('ceo_quote', e.target.value)} className="input-base resize-y" />
         </div>
       </section>
 
