@@ -24,7 +24,7 @@ export default async function Testimonials() {
       <div className="container-base">
         <SectionHeader
           eyebrow="Témoignages"
-          title="Ce que disent nos clients"
+          title="Avis Clients"
           description="La satisfaction de nos clients est notre meilleure carte de visite."
         />
 
