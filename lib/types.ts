@@ -110,6 +110,15 @@ export interface TimelineEvent {
   status: ContentStatus
 }
 
+export interface Partner {
+  id: string
+  name: string
+  logo_url: string | null
+  website_url: string | null
+  sort_order: number
+  status: ContentStatus
+}
+
 export interface ContactSubmission {
   id?: string
   type: SubmissionType

@@ -257,7 +257,7 @@ function Field({
     )
   }
 
-  const inputType = f.type === 'number' ? 'number' : f.type === 'date' ? 'date' : f.type === 'datetime' ? 'datetime-local' : 'text'
+  const inputType = f.type === 'number' ? 'number' : f.type === 'date' ? 'date' : f.type === 'datetime' ? 'datetime-local' : f.type === 'url' ? 'url' : 'text'
 
   return (
     <div>

@@ -10,6 +10,7 @@ import { z } from 'zod'
 
 export type FieldType =
   | 'text'
+  | 'url'
   | 'slug'
   | 'textarea'
   | 'richtext'
@@ -298,6 +299,29 @@ export const ENTITIES: Record<string, EntityConfig> = {
       { name: 'status', label: 'Statut', type: 'select', required: true, options: STATUS_OPTIONS },
     ],
   },
+
+  partners: {
+    key: 'partners',
+    table: 'partners',
+    labelSingular: 'Partenaire',
+    labelPlural: 'Partenaires',
+    bucket: 'partners',
+    revalidate: ['/a-propos'],
+    orderBy: { column: 'sort_order', ascending: true },
+    listColumns: [
+      { key: 'logo_url', label: '', type: 'image' },
+      { key: 'name', label: 'Nom' },
+      { key: 'sort_order', label: 'Ordre' },
+      { key: 'status', label: 'Statut', type: 'status' },
+    ],
+    fields: [
+      { name: 'name', label: 'Nom du partenaire', type: 'text', required: true, colSpan: 2 },
+      { name: 'logo_url', label: 'Logo', type: 'image', bucket: 'partners' },
+      { name: 'website_url', label: 'Site web (optionnel)', type: 'url', placeholder: 'https://…' },
+      { name: 'sort_order', label: 'Ordre d’affichage', type: 'number', integer: true, min: 0 },
+      { name: 'status', label: 'Statut', type: 'select', required: true, options: STATUS_OPTIONS },
+    ],
+  },
 }
 
 export function getEntity(key: string): EntityConfig | null {
@@ -331,6 +355,12 @@ function fieldToZod(f: FieldDef): z.ZodTypeAny {
         ? base.min(1, `${f.label} est requis.`)
         : base.optional().nullable()
     }
+    case 'url': {
+      const msg = `${f.label} : URL invalide (ex : https://…).`
+      return f.required
+        ? z.string().trim().url(msg)
+        : z.union([z.literal(''), z.string().trim().url(msg)]).optional().nullable()
+    }
     default: {
       const base = z.string().trim()
       return f.required ? base.min(1, `${f.label} est requis.`) : base.optional().nullable()
@@ -352,7 +382,7 @@ export function normalizePayload(
   const out: Record<string, unknown> = {}
   for (const f of config.fields) {
     let v = data[f.name]
-    if ((f.type === 'text' || f.type === 'slug' || f.type === 'textarea' || f.type === 'richtext' || f.type === 'date' || f.type === 'datetime' || f.type === 'image') && (v === '' || v === undefined)) {
+    if ((f.type === 'text' || f.type === 'url' || f.type === 'slug' || f.type === 'textarea' || f.type === 'richtext' || f.type === 'date' || f.type === 'datetime' || f.type === 'image') && (v === '' || v === undefined)) {
       v = null
     }
     if (f.type === 'number' && (v === undefined || Number.isNaN(v as number))) v = null

@@ -7,6 +7,7 @@ import type {
   ValueItem,
   StatItem,
   TimelineEvent,
+  Partner,
 } from './types'
 
 export const SITE_CONFIG = {
@@ -512,3 +513,7 @@ export const SECTION_SETTINGS = {
       'Chez 2AC GROUPE, nous avons bâti notre réputation sur une conviction simple : nos clients méritent le meilleur. Pas seulement en termes de qualité de prestation, mais aussi en termes de transparence, de ponctualité et de respect. Chaque projet que nous acceptons, nous nous y engageons entièrement.',
   },
 }
+
+// Partenaires (bandeau « À propos », migration 008). Vide par défaut :
+// aucun faux partenaire — le bandeau reste masqué tant que la base est vide.
+export const PARTNERS_DATA: Omit<Partner, 'id'>[] = []

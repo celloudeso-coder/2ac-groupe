@@ -13,6 +13,7 @@ import {
   Gem,
   BarChart3,
   History,
+  Handshake,
   Inbox,
   Settings,
   LogOut,
@@ -34,6 +35,7 @@ const NAV = [
   { href: '/admin/values', label: 'Valeurs', icon: Gem },
   { href: '/admin/stats', label: 'Statistiques', icon: BarChart3 },
   { href: '/admin/timeline_events', label: 'Histoire', icon: History },
+  { href: '/admin/partners', label: 'Partenaires', icon: Handshake },
   { href: '/admin/demandes', label: 'Demandes', icon: Inbox, badgeKey: 'demandes' as const },
   { href: '/admin/parametres', label: 'Paramètres', icon: Settings },
 ]

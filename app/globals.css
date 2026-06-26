@@ -287,3 +287,35 @@
   .liquid-blob { animation: none !important; }
   .reveal { opacity: 1 !important; transform: none !important; }
 }
+
+/* ============================================================
+   Bandeau partenaires défilant (marquee 100 % CSS)
+   ============================================================ */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1rem;
+  animation: marquee 38s linear infinite;
+  will-change: transform;
+}
+/* Pause au survol */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (max-width: 640px) {
+  .marquee-track { animation-duration: 24s; }
+}
+/* Mouvement réduit : aucune animation (la version statique prend le relais
+   via les classes Tailwind motion-reduce:* dans le composant). */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}

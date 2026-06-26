@@ -5,6 +5,7 @@ import ScrollReveal from '@/components/ui/ScrollReveal'
 import PageHero from '@/components/ui/PageHero'
 import LiquidBackground from '@/components/ui/LiquidBackground'
 import CtaBanner from '@/components/home/CtaBanner'
+import PartnersMarquee from '@/components/about/PartnersMarquee'
 import ValueIcon from '@/components/ui/ValueIcon'
 import { getTeamMembers, getSiteSettings, getValues, getTimeline } from '@/lib/content'
 
@@ -149,6 +150,9 @@ export default async function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Partenaires (bandeau défilant — masqué si aucun partenaire) */}
+      <PartnersMarquee />
 
       {/* CEO message */}
       <section className="relative overflow-hidden section-padding bg-background" aria-labelledby="ceo-heading">

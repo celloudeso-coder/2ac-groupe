@@ -21,6 +21,7 @@ import {
   VALUES_DATA,
   STATS_DATA,
   TIMELINE_DATA,
+  PARTNERS_DATA,
   SECTION_SETTINGS,
   SITE_CONFIG,
 } from '@/lib/data'
@@ -33,6 +34,7 @@ import type {
   ValueItem,
   StatItem,
   TimelineEvent,
+  Partner,
   SiteSettings,
 } from '@/lib/types'
 
@@ -99,6 +101,7 @@ const fallbackTeam = TEAM_DATA.map((m, i) => ({
 const fallbackValues = VALUES_DATA.map((v, i) => ({ ...v, id: String(i) })) as ValueItem[]
 const fallbackStats = STATS_DATA.map((s, i) => ({ ...s, id: String(i) })) as StatItem[]
 const fallbackTimeline = TIMELINE_DATA.map((t, i) => ({ ...t, id: String(i) })) as TimelineEvent[]
+const fallbackPartners = PARTNERS_DATA.map((p, i) => ({ ...p, id: String(i) })) as Partner[]
 
 const fallbackSettings: SiteSettings = {
   company: {
@@ -344,6 +347,23 @@ export const getTimeline = cache(async (): Promise<TimelineEvent[]> => {
   } catch (e) {
     console.error('[content] getTimeline → fallback statique :', e)
     return fallbackTimeline
+  }
+})
+
+export const getPartners = cache(async (): Promise<Partner[]> => {
+  if (!supabaseConfigured()) return fallbackPartners
+  try {
+    const supabase = getReadClient()
+    const { data, error } = await supabase
+      .from('partners')
+      .select('*')
+      .eq('status', 'published')
+      .order('sort_order', { ascending: true })
+    if (error) throw error
+    return data && data.length > 0 ? (data as Partner[]) : fallbackPartners
+  } catch (e) {
+    console.error('[content] getPartners → fallback statique :', e)
+    return fallbackPartners
   }
 })
 
