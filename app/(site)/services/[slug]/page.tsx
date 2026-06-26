@@ -120,11 +120,7 @@ export default async function ServicePage({ params }: Props) {
                 }}
                 aria-hidden
               />
-              <div
-                className={`card-glass glass-edge relative flex aspect-[4/3] w-full max-w-md items-center justify-center overflow-hidden ${
-                  service.logo_url || !service.cover_image ? 'p-10' : ''
-                }`}
-              >
+              <div className="card-glass glass-edge relative flex aspect-[4/3] w-full max-w-md items-center justify-center overflow-hidden p-10">
                 {service.logo_url ? (
                   <Image
                     src={service.logo_url}
@@ -151,6 +147,24 @@ export default async function ServicePage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {/* Bannière photo de couverture — affichée quand un logo occupe déjà le hero */}
+      {service.cover_image && service.logo_url && (
+        <section className="bg-background pb-2" aria-label="Photo du pôle">
+          <div className="container-base">
+            <div className="relative aspect-[21/9] w-full overflow-hidden rounded-3xl">
+              <Image
+                src={service.cover_image}
+                alt={service.brand_name ?? service.title}
+                fill
+                sizes="100vw"
+                className="object-cover"
+                priority
+              />
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Content */}
       <section className="section-padding bg-background">
